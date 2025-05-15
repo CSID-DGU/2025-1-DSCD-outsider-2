@@ -41,14 +41,14 @@ export default function Mypage() {
       <div className="w-full flex justify-center mt-20">
         <div className="grid grid-cols-2 gap-16">
 
-          {/* 매칭 결과 보기 */}
-          <button onClick={() => alert("매칭 결과로 이동")}>
+          {/* 오늘의 매칭 결과 */}
+          <button onClick={() => router.push("/matching_result")}>
             <div className="flex flex-col items-center gap-3">
               <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
                 <img src="/매칭결과보기.png" alt="매칭 결과" />
               </div>
-              <div className="text-xl">매칭 결과 보기</div>
-              <div className="text-base text-black/50 text-center">새로운 매칭이 기다리고 있어요!</div>
+              <div className="text-xl">오늘의 매칭 결과</div>
+              <div className="text-base text-black/50 text-center">매칭된 상대의 프로필을 확인해보세요!</div>
             </div>
           </button>
 
@@ -79,14 +79,14 @@ export default function Mypage() {
             </div>
           </button>
 
-          {/* 내 정보 수정 */}
-          <button onClick={() => alert("내 정보 수정 이동")}>
+          {/* 수락한 상대 확인 */}
+          <button onClick={() => alert("수락한 상대 확인 이동")}>
             <div className="flex flex-col items-center gap-3">
               <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
-                <img src="/내정보수정.png" alt="내 정보 수정" />
+                <img src="/내정보수정.png" alt="수락한 상대 확인" />
               </div>
-              <div className="text-xl">내 정보 수정</div>
-              <div className="text-base text-black/50 text-center">정보 수정하기</div>
+              <div className="text-xl">수락한 상대 확인</div>
+              <div className="text-base text-black/50 text-center">서로 수락한 경우,<br/>다음 날 오전 8시에 카카오톡 ID가 공개돼요</div>
             </div>
           </button>
 
