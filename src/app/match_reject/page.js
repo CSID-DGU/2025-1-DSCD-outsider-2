@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-export default function MatchAcceptPage() {
+export default function MatchRejectPage() {
   const router = useRouter();
 
   return (

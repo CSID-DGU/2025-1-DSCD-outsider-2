@@ -80,7 +80,7 @@ export default function Mypage() {
           </button>
 
           {/* 수락한 상대 확인 */}
-          <button onClick={() => alert("수락한 상대 확인 이동")}>
+          <button onClick={() => router.push("/partner_info")}>
             <div className="flex flex-col items-center gap-3">
               <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
                 <img src="/내정보수정.png" alt="수락한 상대 확인" />
