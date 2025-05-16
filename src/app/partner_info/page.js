@@ -69,7 +69,7 @@ export default function MatchPartnerInfoPage() {
 
           {/* 장소 추천 바로가기 */}
           <button
-            onClick={() => router.push("/place_recommend")} // 실제 추천 페이지 경로로 수정 필요
+            onClick={() => router.push("/place_recommend")} // 실제 추천 페이지 경로
             className="w-60 p-3 bg-red-200 rounded-lg text-white font-bold"
           >
             <div className="text-white text-xl font-extrabold leading-normal font-['Roboto']">
