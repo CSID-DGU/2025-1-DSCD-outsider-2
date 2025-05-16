@@ -1,9 +1,9 @@
 # 슈끌림 소개팅 프로젝트
-이 프로젝트는 React + Next.js 기반으로 프론트엔드를 개발합니다.
-page.js: 메인 화면
-signup: 회원가입 화면
-login: 로그인 화면
-mypage: 마이페이지 화면
+이 프로젝트는 React + Next.js 기반으로 프론트엔드를 개발합니다. \n
+page.js: 메인 화면\n
+signup: 회원가입 화면\n
+login: 로그인 화면\n
+mypage: 마이페이지 화면\n
 self_intro: 자기소개서 작성 화면 9장
 self_intro_save: 자기소개서 저장 화면
 apply_complete: 소개팅 신청 완료 화면
