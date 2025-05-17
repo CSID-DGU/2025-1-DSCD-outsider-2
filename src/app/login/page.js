@@ -25,10 +25,10 @@ export default function Login() {
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
         <div className="text-black text-3xl font-bold">슈끌림</div>
         <div className="flex gap-12">
-          <Link href="/introduce" className="text-black">사이트 소개</Link>
-          <Link href="/howto" className="text-black">이용 방법</Link>
+          <Link href="/site_intro" className="text-black">사이트 소개</Link>
+          <Link href="/how_to_use" className="text-black">이용 방법</Link>
           <Link href="/mypage" className="text-black">마이페이지</Link>
-          <Link href="/recommend" className="text-black">장소 추천</Link>
+          <Link href="/place_recommend" className="text-black">장소 추천</Link>
         </div>
       </div>
 

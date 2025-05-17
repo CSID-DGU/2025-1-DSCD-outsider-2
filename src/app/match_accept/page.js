@@ -1,20 +1,21 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function MatchAcceptPage() {
   const router = useRouter();
 
   return (
     <div className="w-full min-h-screen bg-white relative overflow-hidden">
-      {/* 상단바 */}
+      {/* ----- 상단바 ----- */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
         <div className="text-black text-3xl font-bold">슈끌림</div>
         <div className="flex gap-12">
-          <button onClick={() => alert("사이트 소개 이동")}>사이트 소개</button>
-          <button onClick={() => alert("이용 방법 이동")}>이용 방법</button>
-          <button onClick={() => router.push("/mypage")}>마이페이지</button>
-          <button onClick={() => alert("장소 추천 이동")}>장소 추천</button>
+          <Link href="/site_intro" className="text-black">사이트 소개</Link>
+          <Link href="/how_to_use" className="text-black">이용 방법</Link>
+          <Link href="/mypage" className="text-black">마이페이지</Link>
+          <Link href="/place_recommend" className="text-black">장소 추천</Link>
         </div>
       </div>
 

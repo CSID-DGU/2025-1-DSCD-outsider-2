@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SelfIntro5() {
   const router = useRouter();
@@ -19,36 +20,58 @@ export default function SelfIntro5() {
     mbtiJP: "",
   });
 
+  const [errorMsg, setErrorMsg] = useState("");
+
   const handleChange = (key, value) => {
     if (!/^(?:[1-9]|10)?$/.test(value)) return;
     setRankings({ ...rankings, [key]: value });
+    setErrorMsg("");
+  };
+
+  const findDuplicates = (arr) => {
+    const counts = {};
+    const duplicates = new Set();
+    for (const num of arr) {
+      if (num in counts) {
+        duplicates.add(num);
+      } else {
+        counts[num] = 1;
+      }
+    }
+    return Array.from(duplicates);
   };
 
   const handleSave = () => {
-  // 저장 로직 (변수명을 rankings로 고침)
-  localStorage.setItem("priorityValues", JSON.stringify(rankings));
+    const values = Object.values(rankings);
 
-  // 저장 완료 메시지
-  alert("저장되었습니다!");
+    if (values.some((v) => v === "")) {
+      setErrorMsg("모든 항목에 1~10 사이의 숫자를 입력해 주세요.");
+      return;
+    }
 
-  // 다음 페이지로 이동
-  router.push("/self_intro/self_intro6");
-};
+    const duplicates = findDuplicates(values);
+    if (duplicates.length > 0) {
+      setErrorMsg(`중복된 숫자: ${duplicates.join(", ")}`);
+      return;
+    }
 
+    localStorage.setItem("priorityValues", JSON.stringify(rankings));
+    alert("저장되었습니다!");
+    router.push("/self_intro/self_intro6");
+  };
 
-  const isComplete = Object.values(rankings).every((v) => v);
+  const isComplete = Object.values(rankings).every((v) => v) && new Set(Object.values(rankings)).size === 10;
 
   return (
     <div className="w-full min-h-screen bg-white relative">
-
       {/* 상단바 */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
         <div className="text-black text-3xl font-bold">슈끌림</div>
         <div className="flex gap-12">
-          <button onClick={() => alert("사이트 소개 이동")}>사이트 소개</button>
-          <button onClick={() => alert("이용 방법 이동")}>이용 방법</button>
-          <button onClick={() => router.push("/mypage")}>마이페이지</button>
-          <button onClick={() => alert("장소 추천 이동")}>장소 추천</button>
+          <Link href="/site_intro" className="text-black">사이트 소개</Link>
+          <Link href="/how_to_use" className="text-black">이용 방법</Link>
+          <Link href="/mypage" className="text-black">마이페이지</Link>
+          <Link href="/place_recommend" className="text-black">장소 추천</Link>
         </div>
       </div>
 
@@ -60,6 +83,9 @@ export default function SelfIntro5() {
         <div className="text-black text-xl mt-10">
           10개의 항목에 중요한 순으로 등수를 매겨주세요
         </div>
+        {errorMsg && (
+          <div className="text-red-500 text-sm font-medium mt-4">{errorMsg}</div>
+        )}
       </div>
 
       {/* 입력 폼 */}

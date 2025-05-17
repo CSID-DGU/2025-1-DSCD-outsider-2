@@ -2,9 +2,25 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const router = useRouter(); // ✅ 반드시 컴포넌트 안에서 선언
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // 또는 다른 key, 예: "nickname"
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleMyPageClick = () => {
+    if (isLoggedIn) {
+      router.push("/mypage");
+    } else {
+      alert("로그인을 해야 이용할 수 있습니다!");
+      router.push("/login");
+    }
+  };
 
   return (
     <div className="w-full min-h-screen bg-white flex flex-col gap-40">
@@ -25,7 +41,7 @@ export default function Home() {
             이용 방법
           </button>
           <button
-            onClick={() => router.push("/mypage")}
+            onClick={handleMyPageClick}
             className="text-black text-base cursor-pointer"
           >
             마이페이지
