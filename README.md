@@ -12,3 +12,5 @@ matching_accept: 매칭 수락 화면
 matching_reject: 매칭 거절 화면  
 partner_info: 상대 정보 알려주는 화면  
 place_recommend: 장소 추천 화면 + 거주지 기반 페이지, 성향 기반 페이지  
+site_intro: 사이트 소개 화면  
+how_to_use: 이용 방법 화면  
