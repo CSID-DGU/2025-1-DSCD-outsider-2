@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function Signup() {
   const router = useRouter();
 
-  // 입력값 상태
+  // 입력 상태 초기값
   const [kakaoId, setKakaoId] = useState("");
   const [password, setPassword] = useState("");
   const [sido, setSido] = useState("");
@@ -14,8 +14,10 @@ export default function Signup() {
   const [terms1, setTerms1] = useState(false);
   const [terms2, setTerms2] = useState(false);
 
+  // 버튼 활성화 조건
   const canSubmit = kakaoId && password.length >= 8 && sido && sigungu && terms1 && terms2;
 
+  // 지역 데이터
   const regions = {
     서울특별시: [
       "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구",
@@ -29,30 +31,58 @@ export default function Signup() {
     ]
   };
 
-  const handleSubmit = () => {
-    localStorage.setItem("kakaoId", kakaoId);
-    localStorage.setItem("password", password);
-    localStorage.setItem("location", `${sido} ${sigungu}`);
-    alert("회원가입이 완료되었습니다!");
-    router.push("/login");
+  // 회원가입 처리 (백엔드에 POST 요청)
+  const handleSubmit = async () => {
+    if (!canSubmit) return;
+
+    try {
+      const response = await fetch("http://localhost:8000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          kakao_id: kakaoId,
+          password: password, // 백엔드에서 반드시 해싱 필요
+          location: `${sido} ${sigungu}`,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("회원가입이 완료되었습니다!");
+        router.push("/login");
+      } else {
+        alert(`회원가입 실패: ${result.message}`);
+      }
+    } catch (err) {
+      console.error("서버 오류:", err);
+      alert("서버 오류로 인해 회원가입에 실패했습니다.");
+    }
   };
 
   return (
     <div className="w-full min-h-screen bg-white">
       {/* 상단바 */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
+        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold">슈끌림</button>
         <div className="flex gap-12">
           <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
           <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
-          <button onClick={() => {
-            const nickname = localStorage.getItem("kakaoId");
-            if (nickname) router.push("/mypage");
-            else {
-              alert("로그인이 필요합니다!");
-              router.push("/login");
-            }
-          }} className="text-black text-base">마이페이지</button>
+          <button
+            onClick={() => {
+              const nickname = localStorage.getItem("kakaoId");
+              if (nickname) router.push("/mypage");
+              else {
+                alert("로그인이 필요합니다!");
+                router.push("/login");
+              }
+            }}
+            className="text-black text-base"
+          >
+            마이페이지
+          </button>
           <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
         </div>
       </div>
@@ -62,7 +92,6 @@ export default function Signup() {
 
       {/* 입력 폼 */}
       <div className="flex flex-wrap gap-10 justify-center mt-10">
-        {/* 카카오 ID */}
         <div className="flex flex-col gap-1">
           <label>카카오톡 ID</label>
           <input
@@ -74,7 +103,6 @@ export default function Signup() {
           />
         </div>
 
-        {/* 비밀번호 */}
         <div className="flex flex-col gap-1">
           <label>비밀번호</label>
           <input
@@ -86,7 +114,6 @@ export default function Signup() {
           />
         </div>
 
-        {/* 시/도 선택 */}
         <div className="flex flex-col gap-1">
           <label>시/도 선택</label>
           <select
@@ -104,7 +131,6 @@ export default function Signup() {
           </select>
         </div>
 
-        {/* 구/시 선택 */}
         {sido && (
           <div className="flex flex-col gap-1">
             <label>구/군/시 선택</label>
@@ -122,7 +148,7 @@ export default function Signup() {
         )}
       </div>
 
-      {/* 약관 */}
+      {/* 약관 (프론트에서만 체크, 백엔드 저장 X) */}
       <div className="max-w-3xl mx-auto mt-10 px-4">
         <div className="mb-4 text-lg font-bold">이용 약관</div>
 
