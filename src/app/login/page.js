@@ -10,12 +10,26 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogin = () => {
-    const nickname = localStorage.getItem("nickname");
+    const savedId = localStorage.getItem("kakaoId");
+    const savedPw = localStorage.getItem("password");
 
-    if (!nickname) {
-      alert("회원가입한 닉네임 정보가 없습니다. 먼저 회원가입 해주세요.");
+    if (!savedId || !savedPw) {
+      alert("회원가입한 정보가 없습니다. 먼저 회원가입 해주세요.");
+    } else if (kakaoId !== savedId || password !== savedPw) {
+      alert("아이디 또는 비밀번호가 틀렸습니다.");
     } else {
+      alert("로그인 성공!");
       router.push("/mypage");
+    }
+  };
+
+  const handleMyPageClick = () => {
+    const nickname = localStorage.getItem("nickname");
+    if (nickname) {
+      router.push("/mypage");
+    } else {
+      alert("로그인을 해야 이용할 수 있습니다!");
+      router.push("/login");
     }
   };
 
@@ -23,12 +37,17 @@ export default function Login() {
     <div className="w-full min-h-screen bg-white relative">
       {/* ----- 상단바 ----- */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <div className="text-black text-3xl font-bold">슈끌림</div>
+        <button
+          onClick={() => router.push("/")}
+          className="text-black text-3xl font-bold cursor-pointer"
+        >
+          슈끌림
+        </button>
         <div className="flex gap-12">
-          <Link href="/site_intro" className="text-black">사이트 소개</Link>
-          <Link href="/how_to_use" className="text-black">이용 방법</Link>
-          <Link href="/mypage" className="text-black">마이페이지</Link>
-          <Link href="/place_recommend" className="text-black">장소 추천</Link>
+          <button onClick={() => router.push("/site_intro")} className="text-black text-base cursor-pointer">사이트 소개</button>
+          <button onClick={() => router.push("/how_to_use")} className="text-black text-base cursor-pointer">이용 방법</button>
+          <button onClick={handleMyPageClick} className="text-black text-base cursor-pointer">마이페이지</button>
+          <button onClick={() => router.push("/place_recommend")} className="text-black text-base cursor-pointer">장소 추천</button>
         </div>
       </div>
 
@@ -43,40 +62,27 @@ export default function Login() {
 
       {/* ----- 로그인 박스 ----- */}
       <div className="w-80 h-96 relative mx-auto mt-10">
-        {/* ----- 프로필 이미지 ----- */}
-        <img
-          className="w-28 h-28 left-[111px] top-[38.50px] absolute"
-          src="/image1.png"
-          alt="프로필 이미지"
-        />
+        <img className="w-28 h-28 left-[111px] top-[38.5px] absolute" src="/image1.png" alt="프로필 이미지" />
 
-        {/* ----- 카카오톡 ID 입력 ----- */}
         <input
           type="text"
           placeholder="카카오톡 ID"
           value={kakaoId}
           onChange={(e) => setKakaoId(e.target.value)}
-          className="w-72 h-11 left-[16px] top-[168px] absolute 
-                     bg-white rounded-tl-md rounded-tr-md 
-                     border border-zinc-300 p-2 font-['Noto_Sans_KR']"
+          className="w-72 h-11 left-[16px] top-[168px] absolute bg-white rounded-t-md border border-zinc-300 p-2 font-['Noto_Sans_KR']"
         />
 
-        {/* ----- 비밀번호 입력 ----- */}
         <input
           type="password"
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-72 h-11 left-[16px] top-[213px] absolute 
-                     bg-white rounded-bl-md rounded-br-md 
-                     border border-zinc-300 border-t-0 p-2 font-['Noto_Sans_KR']"
+          className="w-72 h-11 left-[16px] top-[213px] absolute bg-white rounded-b-md border border-zinc-300 border-t-0 p-2 font-['Noto_Sans_KR']"
         />
 
-        {/* ----- 로그인 버튼 ----- */}
         <button
           onClick={handleLogin}
-          className="w-72 h-11 left-[15px] top-[268px] absolute 
-                     bg-red-200 rounded-md text-white text-xl font-bold font-['Noto_Sans_KR']"
+          className="w-72 h-11 left-[15px] top-[268px] absolute bg-red-200 rounded-md text-white text-xl font-bold font-['Noto_Sans_KR']"
         >
           로그인
         </button>

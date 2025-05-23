@@ -1,30 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Mypage() {
   const router = useRouter();
-
-  // 회원가입 또는 로그인 시 저장했던 닉네임 불러오기
-  const [nickname, setNickname] = useState("");
-
-  useEffect(() => {
-    const savedNickname = localStorage.getItem("nickname") || "회원";
-    setNickname(savedNickname);
-  }, []);
 
   return (
     <div className="w-full min-h-screen bg-white relative">
 
       {/* ----- 상단바 ----- */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <div className="text-black text-3xl font-bold">슈끌림</div>
+        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
         <div className="flex gap-12">
-          <button onClick={() => router.push("/site_intro")}>사이트 소개</button>
-          <button onClick={() => router.push("/how_to_use")}>이용 방법</button>
-          <button onClick={() => router.push("/mypage")}>마이페이지</button>
-          <button onClick={() => router.push("/place_recommend")}>장소 추천</button>
+          <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
+          <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
+          <button onClick={() => {
+            const kakaoId = localStorage.getItem("kakaoId");
+            if (kakaoId) router.push("/mypage");
+            else {
+              alert("로그인이 필요합니다!");
+              router.push("/login");
+            }
+          }} className="text-black text-base">마이페이지</button>
+          <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
         </div>
       </div>
 
@@ -32,7 +30,7 @@ export default function Mypage() {
       <div className="w-[858px] text-center mx-auto gap-4 mt-16">
         <div className="text-4xl font-bold">마이페이지</div>
         <div className="text-3xl text-center font-medium">
-          {nickname}님 반가워요!<br />
+          회원님 반가워요!<br />
           지금 바로 시작해보세요
         </div>
       </div>
@@ -66,7 +64,6 @@ export default function Mypage() {
           </button>
 
           {/* 자기소개서 작성 */}
-
           <button onClick={() => router.push("/self_intro/self_intro1")}>
             <div className="flex flex-col items-center gap-3">
               <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
@@ -86,7 +83,9 @@ export default function Mypage() {
                 <img src="/내정보수정.png" alt="수락한 상대 확인" />
               </div>
               <div className="text-xl">수락한 상대 확인</div>
-              <div className="text-base text-black/50 text-center">서로 수락한 경우,<br/>다음 날 오전 8시에 카카오톡 ID가 공개돼요</div>
+              <div className="text-base text-black/50 text-center">
+                서로 수락한 경우,<br />다음 날 오전 8시에 카카오톡 ID가 공개돼요
+              </div>
             </div>
           </button>
 

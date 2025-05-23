@@ -26,7 +26,12 @@ export default function Home() {
     <div className="w-full min-h-screen bg-white flex flex-col gap-40">
       {/* ----- 상단바 ----- */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <div className="text-black text-3xl font-bold">슈끌림</div>
+        <button
+          onClick={() => router.push("/")}
+          className="text-black text-3xl font-bold cursor-pointer"
+        >
+          슈끌림
+        </button>
         <div className="flex gap-12">
           <button
             onClick={() => router.push("/site_intro")}

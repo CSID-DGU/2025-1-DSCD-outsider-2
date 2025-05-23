@@ -1,21 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
 
-  // 상태 관리
+  // 입력값 상태
   const [kakaoId, setKakaoId] = useState("");
   const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
   const [sido, setSido] = useState("");
   const [sigungu, setSigungu] = useState("");
   const [terms1, setTerms1] = useState(false);
   const [terms2, setTerms2] = useState(false);
 
-  const canSubmit = terms1 && terms2;
+  const canSubmit = kakaoId && password.length >= 8 && sido && sigungu && terms1 && terms2;
 
   const regions = {
     서울특별시: [
@@ -30,26 +29,31 @@ export default function Signup() {
     ]
   };
 
-  const handleMyPageClick = () => {
-    const isLoggedIn = !!localStorage.getItem("nickname");
-    if (isLoggedIn) {
-      router.push("/mypage");
-    } else {
-      alert("로그인을 해야 이용할 수 있습니다!");
-      router.push("/login");
-    }
+  const handleSubmit = () => {
+    localStorage.setItem("kakaoId", kakaoId);
+    localStorage.setItem("password", password);
+    localStorage.setItem("location", `${sido} ${sigungu}`);
+    alert("회원가입이 완료되었습니다!");
+    router.push("/login");
   };
 
   return (
-    <div className="w-full min-h-screen bg-white relative">
+    <div className="w-full min-h-screen bg-white">
       {/* 상단바 */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <div className="text-black text-3xl font-bold">슈끌림</div>
+        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
         <div className="flex gap-12">
-          <button onClick={() => router.push("/site_intro")} className="text-black text-base cursor-pointer">사이트 소개</button>
-          <button onClick={() => router.push("/how_to_use")} className="text-black text-base cursor-pointer">이용 방법</button>
-          <button onClick={handleMyPageClick} className="text-black text-base cursor-pointer">마이페이지</button>
-          <button onClick={() => router.push("/place_recommend")} className="text-black text-base cursor-pointer">장소 추천</button>
+          <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
+          <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
+          <button onClick={() => {
+            const nickname = localStorage.getItem("kakaoId");
+            if (nickname) router.push("/mypage");
+            else {
+              alert("로그인이 필요합니다!");
+              router.push("/login");
+            }
+          }} className="text-black text-base">마이페이지</button>
+          <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
         </div>
       </div>
 
@@ -58,6 +62,7 @@ export default function Signup() {
 
       {/* 입력 폼 */}
       <div className="flex flex-wrap gap-10 justify-center mt-10">
+        {/* 카카오 ID */}
         <div className="flex flex-col gap-1">
           <label>카카오톡 ID</label>
           <input
@@ -69,24 +74,14 @@ export default function Signup() {
           />
         </div>
 
+        {/* 비밀번호 */}
         <div className="flex flex-col gap-1">
           <label>비밀번호</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호를 입력하세요 (최소 8자 이상)"
-            className="w-64 p-2 border border-gray-400 rounded"
-          />
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <label>닉네임</label>
-          <input
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="사용할 닉네임을 입력하세요"
+            placeholder="비밀번호 (8자 이상)"
             className="w-64 p-2 border border-gray-400 rounded"
           />
         </div>
@@ -98,20 +93,18 @@ export default function Signup() {
             value={sido}
             onChange={(e) => {
               setSido(e.target.value);
-              setSigungu(""); // 시/도 바뀌면 구 초기화
+              setSigungu("");
             }}
             className="w-64 p-2 border border-gray-400 rounded"
           >
             <option value="">시/도를 선택하세요</option>
             {Object.keys(regions).map((region) => (
-              <option key={region} value={region}>
-                {region}
-              </option>
+              <option key={region} value={region}>{region}</option>
             ))}
           </select>
         </div>
 
-        {/* 구/군/시 선택 */}
+        {/* 구/시 선택 */}
         {sido && (
           <div className="flex flex-col gap-1">
             <label>구/군/시 선택</label>
@@ -122,9 +115,7 @@ export default function Signup() {
             >
               <option value="">선택하세요</option>
               {regions[sido].map((area) => (
-                <option key={area} value={area}>
-                  {area}
-                </option>
+                <option key={area} value={area}>{area}</option>
               ))}
             </select>
           </div>
@@ -135,53 +126,42 @@ export default function Signup() {
       <div className="max-w-3xl mx-auto mt-10 px-4">
         <div className="mb-4 text-lg font-bold">이용 약관</div>
 
-        <div className="h-48 border border-gray-400 p-4 overflow-y-auto text-sm mb-4">
-          [필수] 슈끌림 이용약관 동의 <br />
-          ① 회원은 본 서비스 이용 시 관련 법령 및 본 약관을 준수해야 합니다. <br />
-          ② 회원가입 시 입력한 정보는 본 서비스 이용에 필요한 최소한의 정보입니다. <br />
-          ③ 타인 정보 도용 및 허위 정보 입력 금지. <br />
-          ④ 제공 콘텐츠는 슈끌림의 자산이며 무단 복제 금지. <br />
-          ⑤ 서비스 정책은 사전 공지 후 변경될 수 있습니다.
+        <div className="h-48 border border-gray-400 p-4 overflow-y-auto text-sm mb-2">
+          [필수] 슈끌림 이용약관 동의<br />
+          ① 회원은 본 서비스 이용 시 관련 법령 및 본 약관을 준수해야 합니다.<br />
+          ② 타인 정보 도용 및 허위 정보 입력 금지.<br />
+          ③ 제공 콘텐츠는 슈끌림의 자산이며 무단 복제 금지.<br />
+          ④ 서비스 정책은 사전 공지 후 변경될 수 있습니다.
         </div>
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-4">
           <input type="checkbox" checked={terms1} onChange={() => setTerms1(!terms1)} />
           <span>이용약관에 동의합니다</span>
         </div>
 
-        <div className="h-48 border border-gray-400 p-4 overflow-y-auto text-sm mb-4">
-          [필수] 개인정보 수집 및 이용 동의 <br />
-          ① 수집 항목: 카카오톡 ID, 비밀번호, 성별, 거주지 <br />
-          ② 수집 목적: 회원가입, 본인 인증, 매칭 서비스 제공 <br />
-          ③ 보유 및 이용 기간: 회원 탈퇴 시까지 또는 법령에 따른 보존 기간까지 <br />
-          ④ 동의 거부 시 서비스 이용 제한 가능.
+        <div className="h-48 border border-gray-400 p-4 overflow-y-auto text-sm mb-2">
+          [필수] 개인정보 수집 및 이용 동의<br />
+          ① 수집 항목: 카카오톡 ID, 비밀번호, 거주지<br />
+          ② 수집 목적: 매칭 서비스 제공<br />
+          ③ 보유 기간: 회원 탈퇴 시까지 또는 법령에 따른 보존 기간까지<br />
+          ④ 동의 거부 시 서비스 이용 제한 가능
         </div>
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2">
           <input type="checkbox" checked={terms2} onChange={() => setTerms2(!terms2)} />
           <span>개인정보 수집 및 이용에 동의합니다</span>
         </div>
       </div>
 
       {/* 가입 버튼 */}
-      <div className="flex justify-center mt-8 mb-16">
-        {canSubmit ? (
-          <button
-            onClick={() => {
-              localStorage.setItem("nickname", nickname);
-              localStorage.setItem("location", `${sido} ${sigungu}`);
-              window.location.href = "/login";
-            }}
-            className="w-60 h-12 bg-red-200 rounded-lg text-white text-xl font-bold"
-          >
-            회원가입 완료하기
-          </button>
-        ) : (
-          <button
-            disabled
-            className="w-60 h-12 bg-gray-300 rounded-lg text-white text-xl font-bold"
-          >
-            회원가입 완료하기
-          </button>
-        )}
+      <div className="flex justify-center mt-10 mb-16">
+        <button
+          disabled={!canSubmit}
+          onClick={handleSubmit}
+          className={`w-60 h-12 rounded-lg text-xl font-bold ${
+            canSubmit ? "bg-red-200 text-white" : "bg-gray-300 text-gray-500"
+          }`}
+        >
+          회원가입 완료하기
+        </button>
       </div>
     </div>
   );
