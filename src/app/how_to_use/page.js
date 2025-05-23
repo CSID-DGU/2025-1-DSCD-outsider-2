@@ -72,12 +72,19 @@ export default function HowToUsePage() {
     <div className="w-full min-h-screen bg-white">
       {/* 상단바 */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <div className="text-black text-3xl font-bold">슈끌림</div>
+        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
         <div className="flex gap-12">
-          <button onClick={() => router.push("/site_intro")}>사이트 소개</button>
-          <button onClick={() => router.push("/how_to_use")}>이용 방법</button>
-          <button onClick={() => router.push("/mypage")}>마이페이지</button>
-          <button onClick={() => router.push("/place_recommend")}>장소 추천</button>
+          <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
+          <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
+          <button onClick={() => {
+            const kakaoId = localStorage.getItem("kakaoId");
+            if (kakaoId) router.push("/mypage");
+            else {
+              alert("로그인이 필요합니다!");
+              router.push("/login");
+            }
+          }} className="text-black text-base">마이페이지</button>
+          <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
         </div>
       </div>
 
