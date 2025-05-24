@@ -31,35 +31,17 @@ export default function Signup() {
     ]
   };
 
-  // 회원가입 처리 (백엔드에 POST 요청)
-  const handleSubmit = async () => {
+  // 다음 단계로 이동하며 입력값 임시 저장
+  const handleSubmit = () => {
     if (!canSubmit) return;
 
-    try {
-      const response = await fetch("http://localhost:8000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          kakao_id: kakaoId,
-          password: password, // 백엔드에서 반드시 해싱 필요
-          location: `${sido} ${sigungu}`,
-        }),
-      });
+    // localStorage에 저장
+    localStorage.setItem("signup_kakao_id", kakaoId);
+    localStorage.setItem("signup_password", password);
+    localStorage.setItem("signup_location", `${sido} ${sigungu}`);
 
-      const result = await response.json();
-
-      if (response.ok) {
-        alert("회원가입이 완료되었습니다!");
-        router.push("/login");
-      } else {
-        alert(`회원가입 실패: ${result.message}`);
-      }
-    } catch (err) {
-      console.error("서버 오류:", err);
-      alert("서버 오류로 인해 회원가입에 실패했습니다.");
-    }
+    // 다음 페이지로 이동
+    router.push("/login");
   };
 
   return (
@@ -148,7 +130,7 @@ export default function Signup() {
         )}
       </div>
 
-      {/* 약관 (프론트에서만 체크, 백엔드 저장 X) */}
+      {/* 약관 */}
       <div className="max-w-3xl mx-auto mt-10 px-4">
         <div className="mb-4 text-lg font-bold">이용 약관</div>
 
@@ -177,7 +159,7 @@ export default function Signup() {
         </div>
       </div>
 
-      {/* 가입 버튼 */}
+      {/* 다음 버튼 */}
       <div className="flex justify-center mt-10 mb-16">
         <button
           disabled={!canSubmit}
@@ -186,7 +168,7 @@ export default function Signup() {
             canSubmit ? "bg-red-200 text-white" : "bg-gray-300 text-gray-500"
           }`}
         >
-          회원가입 완료하기
+          다음으로
         </button>
       </div>
     </div>

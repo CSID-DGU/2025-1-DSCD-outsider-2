@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
@@ -9,20 +8,24 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  // 로그인 처리 로직
   const handleLogin = () => {
-    const savedId = localStorage.getItem("kakaoId");
-    const savedPw = localStorage.getItem("password");
+    const savedId = localStorage.getItem("signup_kakao_id");
+    const savedPw = localStorage.getItem("signup_password");
 
     if (!savedId || !savedPw) {
       alert("회원가입한 정보가 없습니다. 먼저 회원가입 해주세요.");
     } else if (kakaoId !== savedId || password !== savedPw) {
       alert("아이디 또는 비밀번호가 틀렸습니다.");
     } else {
+      // 로그인 성공 시 nickname 임시 저장 (추후 닉네임 필드 생기면 교체 가능)
+      localStorage.setItem("nickname", savedId);
       alert("로그인 성공!");
       router.push("/mypage");
     }
   };
 
+  // 상단바에서 마이페이지 클릭 시 동작
   const handleMyPageClick = () => {
     const nickname = localStorage.getItem("nickname");
     if (nickname) {
@@ -62,7 +65,11 @@ export default function Login() {
 
       {/* ----- 로그인 박스 ----- */}
       <div className="w-80 h-96 relative mx-auto mt-10">
-        <img className="w-28 h-28 left-[111px] top-[38.5px] absolute" src="/image1.png" alt="프로필 이미지" />
+        <img
+          className="w-28 h-28 left-[111px] top-[38.5px] absolute"
+          src="/image1.png"
+          alt="프로필 이미지"
+        />
 
         <input
           type="text"
