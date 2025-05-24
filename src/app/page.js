@@ -45,12 +45,7 @@ export default function Home() {
           >
             이용 방법
           </button>
-          <button
-            onClick={handleMyPageClick}
-            className="text-black text-base cursor-pointer"
-          >
-            마이페이지
-          </button>
+          <button onClick={() => router.push("/mypage")} className="text-black text-base">마이페이지</button>
           <button
             onClick={() => router.push("/place_recommend")}
             className="text-black text-base cursor-pointer"

@@ -49,7 +49,7 @@ export default function Login() {
         <div className="flex gap-12">
           <button onClick={() => router.push("/site_intro")} className="text-black text-base cursor-pointer">사이트 소개</button>
           <button onClick={() => router.push("/how_to_use")} className="text-black text-base cursor-pointer">이용 방법</button>
-          <button onClick={handleMyPageClick} className="text-black text-base cursor-pointer">마이페이지</button>
+          <button onClick={() => router.push("/mypage")} className="text-black text-base">마이페이지</button>
           <button onClick={() => router.push("/place_recommend")} className="text-black text-base cursor-pointer">장소 추천</button>
         </div>
       </div>
