@@ -1,13 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Mypage() {
   const router = useRouter();
+  const [nickname, setNickname] = useState("");
+
+  // 페이지 진입 시 localStorage에서 사용자 정보 확인
+  useEffect(() => {
+    const storedNickname = localStorage.getItem("nickname");
+    if (storedNickname) {
+      setNickname(storedNickname);
+    } else {
+      alert("로그인이 필요합니다!");
+      router.push("/login");
+    }
+  }, [router]);
 
   return (
     <div className="w-full min-h-screen bg-white relative">
-
       {/* ----- 상단바 ----- */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
         <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
@@ -15,8 +27,8 @@ export default function Mypage() {
           <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
           <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
           <button onClick={() => {
-            const kakaoId = localStorage.getItem("kakaoId");
-            if (kakaoId) router.push("/mypage");
+            const nickname = localStorage.getItem("nickname");
+            if (nickname) router.push("/mypage");
             else {
               alert("로그인이 필요합니다!");
               router.push("/login");
@@ -30,7 +42,7 @@ export default function Mypage() {
       <div className="w-[858px] text-center mx-auto gap-4 mt-16">
         <div className="text-4xl font-bold">마이페이지</div>
         <div className="text-3xl text-center font-medium">
-          회원님 반가워요!<br />
+          {nickname}님 반가워요!<br />
           지금 바로 시작해보세요
         </div>
       </div>
