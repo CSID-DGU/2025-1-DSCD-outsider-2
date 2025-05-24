@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function SelfIntro5() {
   const router = useRouter();
@@ -55,29 +54,49 @@ export default function SelfIntro5() {
       return;
     }
 
+    // 가중치 계산: 1등=10점, 2등=9점, ..., 10등=1점
+    const weights = {};
+    for (const [key, rank] of Object.entries(rankings)) {
+      weights[key] = 11 - parseInt(rank); // 문자열 → 숫자 변환
+    }
+
     localStorage.setItem("priorityValues", JSON.stringify(rankings));
+    localStorage.setItem("priorityWeights", JSON.stringify(weights));
+
     alert("저장되었습니다!");
     router.push("/self_intro/self_intro6");
   };
 
-  const isComplete = Object.values(rankings).every((v) => v) && new Set(Object.values(rankings)).size === 10;
+  const isComplete =
+    Object.values(rankings).every((v) => v) &&
+    new Set(Object.values(rankings)).size === 10;
 
   return (
     <div className="w-full min-h-screen bg-white relative">
       {/* 상단바 */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
+        <button
+          onClick={() => router.push("/")}
+          className="text-black text-3xl font-bold cursor-pointer"
+        >
+          슈끌림
+        </button>
         <div className="flex gap-12">
           <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
           <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
-          <button onClick={() => {
-            const kakaoId = localStorage.getItem("kakaoId");
-            if (kakaoId) router.push("/mypage");
-            else {
-              alert("로그인이 필요합니다!");
-              router.push("/login");
-            }
-          }} className="text-black text-base">마이페이지</button>
+          <button
+            onClick={() => {
+              const kakaoId = localStorage.getItem("kakaoId");
+              if (kakaoId) router.push("/mypage");
+              else {
+                alert("로그인이 필요합니다!");
+                router.push("/login");
+              }
+            }}
+            className="text-black text-base"
+          >
+            마이페이지
+          </button>
           <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
         </div>
       </div>
@@ -134,7 +153,9 @@ export default function SelfIntro5() {
           <button
             disabled={!isComplete}
             onClick={handleSave}
-            className={`w-60 p-3 absolute left-[252px] rounded-lg ${isComplete ? "bg-red-200 text-white" : "bg-gray-300 text-gray-500"}`}
+            className={`w-60 p-3 absolute left-[252px] rounded-lg ${
+              isComplete ? "bg-red-200 text-white" : "bg-gray-300 text-gray-500"
+            }`}
           >
             SAVE
           </button>

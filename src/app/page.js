@@ -9,7 +9,7 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // 또는 다른 key, 예: "nickname"
+    const token = localStorage.getItem("token"); 
     setIsLoggedIn(!!token);
   }, []);
 
