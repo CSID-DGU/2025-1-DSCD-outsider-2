@@ -54,10 +54,10 @@ export default function SelfIntro5() {
       return;
     }
 
-    // 가중치 계산: 1등=10점, 2등=9점, ..., 10등=1점
+    // 가중치 계산: 1등=9점, 2등=8점, ..., 10등=0점
     const weights = {};
     for (const [key, rank] of Object.entries(rankings)) {
-      weights[key] = 11 - parseInt(rank); // 문자열 → 숫자 변환
+      weights[key] = 10 - parseInt(rank); // 문자열 → 숫자 변환
     }
 
     localStorage.setItem("priorityValues", JSON.stringify(rankings));

@@ -168,7 +168,7 @@ export default function Signup() {
             canSubmit ? "bg-red-200 text-white" : "bg-gray-300 text-gray-500"
           }`}
         >
-          다음으로
+          회원가입
         </button>
       </div>
     </div>
