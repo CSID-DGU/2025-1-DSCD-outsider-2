@@ -124,7 +124,7 @@ export default function SelfIntro5() {
             </div>
             <input
               type="text"
-              value={rankings[item.key]}
+              value={rankings[item.key] || ""}
               onChange={(e) => handleChange(item.key, e.target.value)}
               className="absolute left-[150px] top-[22px] w-64 h-9 rounded-md outline outline-1 outline-black/10 px-3 text-sm"
               placeholder="1~10 사이의 숫자를 입력하세요"
