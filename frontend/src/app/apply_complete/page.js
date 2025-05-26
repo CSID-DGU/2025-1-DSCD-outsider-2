@@ -22,15 +22,15 @@ export default function ApplyCompletePage() {
       {/* ----- 본문 영역 ----- */}
       <div className="flex flex-col items-center justify-center w-full mt-40 gap-12 text-center px-4">
         {/* 텍스트 + 아이콘 */}
+        <div className="text-black-400 text-4xl font-bold">
+          소개팅 신청이 완료되었습니다!
+        </div>
         <div className="flex items-center gap-6">
           <img
             className="w-24 h-24"
             src="소개팅신청완료.png"
             alt="아이콘"
           />
-          <div className="text-black text-4xl font-bold font-['Roboto'] leading-[48px]">
-            소개팅 신청이 완료되었습니다!
-          </div>
         </div>
 
         {/* 매칭 안내 박스 */}
