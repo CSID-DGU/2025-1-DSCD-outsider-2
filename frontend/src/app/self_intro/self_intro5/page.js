@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+
 
 export default function SelfIntro5() {
   const router = useRouter();
@@ -20,6 +21,15 @@ export default function SelfIntro5() {
   });
 
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+  const savedRankings = JSON.parse(localStorage.getItem("priorityValues") || "{}");
+
+  if (Object.keys(savedRankings).length > 0) {
+    setRankings(savedRankings);
+  }
+}, []);
+
 
   const handleChange = (key, value) => {
     if (!/^(?:[1-9]|10)?$/.test(value)) return;
@@ -54,14 +64,7 @@ export default function SelfIntro5() {
       return;
     }
 
-    // 가중치 계산: 1등=9점, 2등=8점, ..., 10등=0점
-    const weights = {};
-    for (const [key, rank] of Object.entries(rankings)) {
-      weights[key] = 10 - parseInt(rank); // 문자열 → 숫자 변환
-    }
-
     localStorage.setItem("priorityValues", JSON.stringify(rankings));
-    localStorage.setItem("priorityWeights", JSON.stringify(weights));
 
     alert("저장되었습니다!");
     router.push("/self_intro/self_intro6");

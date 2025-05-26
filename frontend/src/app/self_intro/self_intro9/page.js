@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SelfIntro9() {
@@ -8,6 +8,15 @@ export default function SelfIntro9() {
 
   const [hobby_other, setHobby_other] = useState("");
   const [want, setWant] = useState("");
+
+  // 저장된 값 불러오기
+        useEffect(() => {
+          const savedHobby_other = localStorage.getItem("hobby_other") || "";
+          const savedWant = localStorage.getItem("want") || "";
+          setHobby_other(savedHobby_other);
+          setWant(savedWant);
+        }, []);
+  
 
   const isComplete = hobby_other.trim() && want.trim();
 

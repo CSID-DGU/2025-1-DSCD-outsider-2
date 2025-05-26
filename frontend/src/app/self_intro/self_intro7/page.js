@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SelfIntro7() {
@@ -8,6 +8,14 @@ export default function SelfIntro7() {
 
   const [weekend, setWeekend] = useState("");
   const [datestyle, setDatestyle] = useState("");
+
+  // 저장된 값 불러오기
+    useEffect(() => {
+      const savedWeekend = localStorage.getItem("weekend") || "";
+      const savedDatestyle = localStorage.getItem("datestyle") || "";
+      setWeekend(savedWeekend);
+      setDatestyle(savedDatestyle);
+    }, []);
 
   const isComplete = weekend.trim() && datestyle.trim();
 

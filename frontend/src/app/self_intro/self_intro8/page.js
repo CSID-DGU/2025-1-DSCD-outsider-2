@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SelfIntro8() {
@@ -8,6 +8,14 @@ export default function SelfIntro8() {
 
   const [advantage, setAdvantage] = useState("");
   const [personality_other, setPersonality_other] = useState("");
+
+  // 저장된 값 불러오기
+      useEffect(() => {
+        const savedAdvantage = localStorage.getItem("advantage") || "";
+        const savedPersonality_other = localStorage.getItem("personality_other") || "";
+        setAdvantage(savedAdvantage);
+        setPersonality_other(savedPersonality_other);
+      }, []);
 
   const isComplete = advantage.trim() && personality_other.trim();
 
