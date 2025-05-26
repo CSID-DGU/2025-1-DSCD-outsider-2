@@ -12,7 +12,7 @@ export default function SelfIntro1() {
 
   const router = useRouter();
 
-  // ✅ 클라이언트에서만 localStorage 접근
+  // 클라이언트에서만 localStorage 접근
   useEffect(() => {
     setGender(localStorage.getItem("gender") || "");
     setHeight(localStorage.getItem("height") || "");
