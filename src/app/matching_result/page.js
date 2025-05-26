@@ -12,7 +12,7 @@ export default function MatchingResult() {
   useEffect(() => {
     setTimeout(() => {
       const dummyData = {
-        nickname: "초코",
+        gender: "여자",
         height: "170cm-174cm",
         age: "30-32세",
         drink: "월 2-3회",
@@ -59,7 +59,7 @@ export default function MatchingResult() {
           <div className="bg-rose-50 rounded-[50px] w-[600px] h-[850px] p-10 flex items-center justify-center">
             <div className="flex flex-col gap-4 w-full">
               {[
-                { label: "닉네임", value: matchData.nickname },
+                { label: "성별", value: matchData.gender },
                 { label: "키", value: matchData.height },
                 { label: "나이", value: matchData.age },
                 { label: "음주 빈도", value: matchData.drink },

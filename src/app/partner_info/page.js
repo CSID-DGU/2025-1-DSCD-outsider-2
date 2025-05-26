@@ -13,7 +13,6 @@ export default function MatchPartnerInfoPage() {
     // 임시 데이터 (백엔드 연동 예정)
     setTimeout(() => {
       const dummyData = {
-        nickname: "초코",
         kakaoId: "xhddurdl"
       };
       setPartnerInfo(dummyData);
@@ -49,8 +48,6 @@ export default function MatchPartnerInfoPage() {
           <div className="text-lg text-black/60 mt-4">상대 정보를 불러오는 중입니다...</div>
         ) : (
           <div className="w-72 text-center text-black text-xl font-bold leading-loose border border-gray-300 rounded-xl p-4">
-            닉네임: {partnerInfo.nickname}
-            <br />
             카카오톡 ID: {partnerInfo.kakaoId}
           </div>
         )}
