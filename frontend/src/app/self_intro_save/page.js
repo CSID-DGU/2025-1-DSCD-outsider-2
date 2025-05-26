@@ -35,6 +35,18 @@ export default function SelfIntroSavePage() {
         preferred_sensing: JSON.parse(localStorage.getItem("idealMbti") || "{}").SorN?.join(", ") || "",
         preferred_thinking: JSON.parse(localStorage.getItem("idealMbti") || "{}").TorF?.join(", ") || "",
         preferred_judging: JSON.parse(localStorage.getItem("idealMbti") || "{}").JorP?.join(", ") || "",
+
+        priority_height: localStorage.getItem("priority_height"),
+        priority_age: localStorage.getItem("priority_age"),
+        priority_drink: localStorage.getItem("priority_drink"),
+        priority_smoke: localStorage.getItem("priority_smoke"),
+        priority_religion: localStorage.getItem("priority_religion"),
+        priority_education: localStorage.getItem("priority_education"),
+        priority_mbtiEI: localStorage.getItem("priority_mbtiEI"),
+        priority_mbtiSN: localStorage.getItem("priority_mbtiSN"),
+        priority_mbtiTF: localStorage.getItem("priority_mbtiTF"),
+        priority_mbtiJP: localStorage.getItem("priority_mbtiJP"),
+
         personality: localStorage.getItem("personality"),
         hobby: localStorage.getItem("hobby"),
         weekend: localStorage.getItem("weekend"),

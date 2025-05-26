@@ -3,52 +3,50 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-
 export default function SelfIntro5() {
   const router = useRouter();
 
   const [rankings, setRankings] = useState({
-    height: "",
-    age: "",
-    drink: "",
-    smoke: "",
-    religion: "",
-    education: "",
-    mbtiEI: "",
-    mbtiSN: "",
-    mbtiTF: "",
-    mbtiJP: "",
+    priority_height: "",
+    priority_age: "",
+    priority_drink: "",
+    priority_smoke: "",
+    priority_religion: "",
+    priority_education: "",
+    priority_mbtiEI: "",
+    priority_mbtiSN: "",
+    priority_mbtiTF: "",
+    priority_mbtiJP: "",
   });
 
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-  const savedRankings = JSON.parse(localStorage.getItem("priorityValues") || "{}");
+    const saved = JSON.parse(localStorage.getItem("priorityValues") || "{}");
 
-  if (Object.keys(savedRankings).length > 0) {
-    setRankings(savedRankings);
-  }
-}, []);
+    const defaultState = {
+      priority_height: "",
+      priority_age: "",
+      priority_drink: "",
+      priority_smoke: "",
+      priority_religion: "",
+      priority_education: "",
+      priority_mbtiEI: "",
+      priority_mbtiSN: "",
+      priority_mbtiTF: "",
+      priority_mbtiJP: "",
+    };
 
+    const merged = { ...defaultState, ...saved };
+    setRankings(merged);
+  }, []);
 
   const handleChange = (key, value) => {
     if (!/^(?:[1-9]|10)?$/.test(value)) return;
-    setRankings({ ...rankings, [key]: value });
+    setRankings((prev) => ({ ...prev, [key]: value }));
     setErrorMsg("");
   };
 
-  const findDuplicates = (arr) => {
-    const counts = {};
-    const duplicates = new Set();
-    for (const num of arr) {
-      if (num in counts) {
-        duplicates.add(num);
-      } else {
-        counts[num] = 1;
-      }
-    }
-    return Array.from(duplicates);
-  };
 
   const handleSave = () => {
     const values = Object.values(rankings);
@@ -58,14 +56,7 @@ export default function SelfIntro5() {
       return;
     }
 
-    const duplicates = findDuplicates(values);
-    if (duplicates.length > 0) {
-      setErrorMsg(`중복된 숫자: ${duplicates.join(", ")}`);
-      return;
-    }
-
     localStorage.setItem("priorityValues", JSON.stringify(rankings));
-
     alert("저장되었습니다!");
     router.push("/self_intro/self_intro6");
   };
@@ -73,6 +64,19 @@ export default function SelfIntro5() {
   const isComplete =
     Object.values(rankings).every((v) => v) &&
     new Set(Object.values(rankings)).size === 10;
+
+  const inputFields = [
+    { label: "키", key: "priority_height" },
+    { label: "나이", key: "priority_age" },
+    { label: "음주", key: "priority_drink" },
+    { label: "흡연", key: "priority_smoke" },
+    { label: "종교", key: "priority_religion" },
+    { label: "학력", key: "priority_education" },
+    { label: "에너지 방향(E/I)", key: "priority_mbtiEI" },
+    { label: "인식 방식(S/N)", key: "priority_mbtiSN" },
+    { label: "판단 방식(T/F)", key: "priority_mbtiTF" },
+    { label: "생활 양식(J/P)", key: "priority_mbtiJP" },
+  ];
 
   return (
     <div className="w-full min-h-screen bg-white relative">
@@ -107,18 +111,7 @@ export default function SelfIntro5() {
 
       {/* 입력 폼 */}
       <div className="absolute left-[650px] top-[150px] w-[869px] h-[670px] flex flex-wrap gap-y-6 gap-x-10">
-        {[
-          { label: "키", key: "height" },
-          { label: "나이", key: "age" },
-          { label: "음주", key: "drink" },
-          { label: "흡연", key: "smoke" },
-          { label: "종교", key: "religion" },
-          { label: "학력", key: "education" },
-          { label: "에너지 방향(E/I)", key: "mbtiEI" },
-          { label: "인식 방식(S/N)", key: "mbtiSN" },
-          { label: "판단 방식(T/F)", key: "mbtiTF" },
-          { label: "생활 양식(J/P)", key: "mbtiJP" },
-        ].map((item) => (
+        {inputFields.map((item) => (
           <div key={item.key} className="w-96 h-20 relative">
             <div className="absolute top-[22px] left-[21px] w-28 h-9 bg-black/5 rounded-md flex items-center justify-center">
               <div className="text-black text-sm">{item.label}</div>
