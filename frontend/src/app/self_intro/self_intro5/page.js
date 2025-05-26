@@ -57,6 +57,12 @@ export default function SelfIntro5() {
     }
 
     localStorage.setItem("priorityValues", JSON.stringify(rankings));
+
+    // 개별 항목도 각각 저장 (SelfIntroSavePage 호환용)
+  Object.entries(rankings).forEach(([key, value]) => {
+    localStorage.setItem(key, value); // 예: priority_height → "1"
+  });
+
     alert("저장되었습니다!");
     router.push("/self_intro/self_intro6");
   };
