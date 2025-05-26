@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation"; 
 
 export default function ApplyCompletePage() {
+  const router = useRouter(); 
+
   return (
     <div className="w-full min-h-screen bg-white">
       {/* ----- 상단바 ----- */}
@@ -15,7 +18,6 @@ export default function ApplyCompletePage() {
           <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
         </div>
       </div>
-
 
       {/* 본문 영역 */}
       <div className="w-full h-[886px] pt-10 flex flex-col items-center justify-center gap-20">
