@@ -49,23 +49,29 @@ export default function SelfIntro5() {
 
 
   const handleSave = () => {
-    const values = Object.values(rankings);
+  const values = Object.values(rankings);
 
-    if (values.some((v) => v === "")) {
-      setErrorMsg("모든 항목에 1~10 사이의 숫자를 입력해 주세요.");
-      return;
-    }
+  if (values.some((v) => v === "")) {
+    setErrorMsg("모든 항목에 1~10 사이의 숫자를 입력해 주세요.");
+    return;
+  }
 
-    localStorage.setItem("priorityValues", JSON.stringify(rankings));
+  const uniqueValues = new Set(values);
+  if (uniqueValues.size !== 10) {
+    setErrorMsg("숫자는 1~10 사이로, 중복 없이 입력해야 합니다.");
+    return;
+  }
 
-    // 개별 항목도 각각 저장 (SelfIntroSavePage 호환용)
+  localStorage.setItem("priorityValues", JSON.stringify(rankings));
+
   Object.entries(rankings).forEach(([key, value]) => {
-    localStorage.setItem(key, value); // 예: priority_height → "1"
+    localStorage.setItem(key, value);
   });
 
-    alert("저장되었습니다!");
-    router.push("/self_intro/self_intro6");
-  };
+  alert("저장되었습니다!");
+  router.push("/self_intro/self_intro6");
+};
+
 
   const isComplete =
     Object.values(rankings).every((v) => v) &&
