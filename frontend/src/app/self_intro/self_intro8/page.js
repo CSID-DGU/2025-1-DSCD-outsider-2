@@ -7,21 +7,21 @@ export default function SelfIntro8() {
   const router = useRouter();
 
   const [advantage, setAdvantage] = useState("");
-  const [personality_other, setPersonality_other] = useState("");
+  const [idealpersonality, setIdealpersonality] = useState("");
 
   // 저장된 값 불러오기
       useEffect(() => {
         const savedAdvantage = localStorage.getItem("advantage") || "";
-        const savedPersonality_other = localStorage.getItem("personality_other") || "";
+        const savedIdealpersonality = localStorage.getItem("idealpersonality") || "";
         setAdvantage(savedAdvantage);
-        setPersonality_other(savedPersonality_other);
+        setPersonality_other(savedIdealpersonality);
       }, []);
 
   const isComplete = advantage.trim() && personality_other.trim();
 
   const handleNext = () => {
     localStorage.setItem("advantage", advantage);
-    localStorage.setItem("personality_other", personality_other);
+    localStorage.setItem("idealpersonality", idealpersonality);
     router.push("/self_intro/self_intro9");
   };
 
@@ -79,8 +79,8 @@ export default function SelfIntro8() {
         <div className="flex-1 flex flex-col justify-center items-start gap-4">
           <div className="text-black text-sm font-medium font-['Roboto'] leading-tight">답변</div>
           <textarea
-            value={personality_other}
-            onChange={(e) => setPersonality_other(e.target.value)}
+            value={idealpersonality}
+            onChange={(e) => setIdealpersonality(e.target.value)}
             className="w-[520px] h-72 px-4 py-3 bg-pink-50 text-black border border-black/10 rounded-md resize-none"
             placeholder="이상형의 성격에 대해 자유롭게 작성해주세요"
           />

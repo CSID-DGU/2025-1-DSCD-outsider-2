@@ -6,22 +6,22 @@ import { useRouter } from "next/navigation";
 export default function SelfIntro9() {
   const router = useRouter();
 
-  const [hobby_other, setHobby_other] = useState("");
+  const [idealhobby, setIdealhobby] = useState("");
   const [want, setWant] = useState("");
 
   // 저장된 값 불러오기
         useEffect(() => {
-          const savedHobby_other = localStorage.getItem("hobby_other") || "";
+          const savedIdealhobby = localStorage.getItem("idealhobby") || "";
           const savedWant = localStorage.getItem("want") || "";
-          setHobby_other(savedHobby_other);
+          setHobby_other(savedIdealhobby);
           setWant(savedWant);
         }, []);
   
 
-  const isComplete = hobby_other.trim() && want.trim();
+  const isComplete = idealhobby.trim() && want.trim();
 
   const handleNext = () => {
-    localStorage.setItem("hobby_other", hobby_other);
+    localStorage.setItem("idealhobby", idealhobby);
     localStorage.setItem("want", want);
     router.push("/self_intro_save");
   };
@@ -56,8 +56,8 @@ export default function SelfIntro9() {
         <div className="flex-1 flex flex-col justify-center items-start gap-4">
           <div className="text-black text-sm font-medium font-['Roboto'] leading-tight">답변</div>
           <textarea
-            value={hobby_other}
-            onChange={(e) => setHobby_other(e.target.value)}
+            value={idealhobby}
+            onChange={(e) => setIdealhobby(e.target.value)}
             className="w-[520px] h-72 px-4 py-3 bg-pink-50 text-black border border-black/10 rounded-md resize-none"
             placeholder="원하는 이상형의 취미를 자유롭게 작성해주세요"
           />

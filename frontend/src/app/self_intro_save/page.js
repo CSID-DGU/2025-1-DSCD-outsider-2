@@ -9,55 +9,72 @@ export default function SelfIntroSavePage() {
 
   useEffect(() => {
     // localStorage는 브라우저에서만 접근 가능하므로 useEffect 안에서 사용
-    const simulateSave = () => {
-      const userData = {
-        kakao_id: localStorage.getItem("signup_kakao_id"),
-        password: localStorage.getItem("signup_password"),
-        location: localStorage.getItem("signup_location"),
-        gender: localStorage.getItem("gender"),
-        height: localStorage.getItem("height"),
-        age: localStorage.getItem("age"),
-        drink: localStorage.getItem("drink"),
-        smoke: localStorage.getItem("smoke"),
-        religion: localStorage.getItem("religion"),
-        education: localStorage.getItem("education"),
-        EorI: localStorage.getItem("mbti_EorI"),
-        SorN: localStorage.getItem("mbti_SorN"),
-        TorF: localStorage.getItem("mbti_TorF"),
-        JorP: localStorage.getItem("mbti_JorP"),
-        preferred_height: JSON.parse(localStorage.getItem("idealHeights") || "[]").join(", "),
-        preferred_age: JSON.parse(localStorage.getItem("idealAges") || "[]").join(", "),
-        preferred_alcohol: JSON.parse(localStorage.getItem("idealDrinks") || "[]").join(", "),
-        preferred_smoking: JSON.parse(localStorage.getItem("idealSmokes") || "[]").join(", "),
-        preferred_religion: JSON.parse(localStorage.getItem("idealReligions") || "[]").join(", "),
-        preferred_education: JSON.parse(localStorage.getItem("idealEducations") || "[]").join(", "),
-        preferred_energy: JSON.parse(localStorage.getItem("idealMbti") || "{}").EorI?.join(", ") || "",
-        preferred_sensing: JSON.parse(localStorage.getItem("idealMbti") || "{}").SorN?.join(", ") || "",
-        preferred_thinking: JSON.parse(localStorage.getItem("idealMbti") || "{}").TorF?.join(", ") || "",
-        preferred_judging: JSON.parse(localStorage.getItem("idealMbti") || "{}").JorP?.join(", ") || "",
+    const simulateSave = async () => {
+  const userData = {
+    kakao_id: localStorage.getItem("signup_kakao_id"),
+    password: localStorage.getItem("signup_password"),
+    location: localStorage.getItem("signup_location"),
+    gender: localStorage.getItem("gender"),
+    height: localStorage.getItem("height"),
+    age: localStorage.getItem("age"),
+    drink: localStorage.getItem("drink"),
+    smoke: localStorage.getItem("smoke"),
+    religion: localStorage.getItem("religion"),
+    education: localStorage.getItem("education"),
+    EorI: localStorage.getItem("mbti_EorI"),
+    SorN: localStorage.getItem("mbti_SorN"),
+    TorF: localStorage.getItem("mbti_TorF"),
+    JorP: localStorage.getItem("mbti_JorP"),
+    preferred_height: JSON.parse(localStorage.getItem("idealHeights") || "[]").join(", "),
+    preferred_age: JSON.parse(localStorage.getItem("idealAges") || "[]").join(", "),
+    preferred_alcohol: JSON.parse(localStorage.getItem("idealDrinks") || "[]").join(", "),
+    preferred_smoking: JSON.parse(localStorage.getItem("idealSmokes") || "[]").join(", "),
+    preferred_religion: JSON.parse(localStorage.getItem("idealReligions") || "[]").join(", "),
+    preferred_education: JSON.parse(localStorage.getItem("idealEducations") || "[]").join(", "),
+    preferred_energy: JSON.parse(localStorage.getItem("idealMbti") || "{}").EorI?.join(", ") || "",
+    preferred_sensing: JSON.parse(localStorage.getItem("idealMbti") || "{}").SorN?.join(", ") || "",
+    preferred_thinking: JSON.parse(localStorage.getItem("idealMbti") || "{}").TorF?.join(", ") || "",
+    preferred_judging: JSON.parse(localStorage.getItem("idealMbti") || "{}").JorP?.join(", ") || "",
+    priority_height: localStorage.getItem("priority_height"),
+    priority_age: localStorage.getItem("priority_age"),
+    priority_drink: localStorage.getItem("priority_drink"),
+    priority_smoke: localStorage.getItem("priority_smoke"),
+    priority_religion: localStorage.getItem("priority_religion"),
+    priority_education: localStorage.getItem("priority_education"),
+    priority_mbtiEI: localStorage.getItem("priority_mbtiEI"),
+    priority_mbtiSN: localStorage.getItem("priority_mbtiSN"),
+    priority_mbtiTF: localStorage.getItem("priority_mbtiTF"),
+    priority_mbtiJP: localStorage.getItem("priority_mbtiJP"),
+    personality: localStorage.getItem("personality"),
+    hobby: localStorage.getItem("hobby"),
+    weekend: localStorage.getItem("weekend"),
+    dateStyle: localStorage.getItem("dateStyle"),
+    advantage: localStorage.getItem("advanatage"),
+    idealpersonality: localStorage.getItem("idealpersonality"),
+    idealhobby: localStorage.getItem("idealhobby"),
+    want: localStorage.getItem("want"),
+  };
 
-        priority_height: localStorage.getItem("priority_height"),
-        priority_age: localStorage.getItem("priority_age"),
-        priority_drink: localStorage.getItem("priority_drink"),
-        priority_smoke: localStorage.getItem("priority_smoke"),
-        priority_religion: localStorage.getItem("priority_religion"),
-        priority_education: localStorage.getItem("priority_education"),
-        priority_mbtiEI: localStorage.getItem("priority_mbtiEI"),
-        priority_mbtiSN: localStorage.getItem("priority_mbtiSN"),
-        priority_mbtiTF: localStorage.getItem("priority_mbtiTF"),
-        priority_mbtiJP: localStorage.getItem("priority_mbtiJP"),
+  console.log("[전송] userData:", userData);
 
-        personality: localStorage.getItem("personality"),
-        hobby: localStorage.getItem("hobby"),
-        weekend: localStorage.getItem("weekend"),
-        dateStyle: localStorage.getItem("dateStyle"),
-        conflictStyle: localStorage.getItem("conflictStyle"),
-        idealType: localStorage.getItem("idealType"),
-        hobby_other: localStorage.getItem("hobby_other"),
-        want: localStorage.getItem("want"),
-      };
+  try {
+    const response = await fetch("http://localhost:8000/save_self_intro/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
 
-      console.log("[데모] 저장된 자기소개서 데이터:", userData);
+    const result = await response.json();
+    console.log("[응답]", result.message);
+
+    setTimeout(() => {
+      setIsSaved(true);
+    }, 500);
+  } catch (error) {
+    console.error("서버 전송 실패:", error);
+  }
+};
+
 
       setTimeout(() => {
         setIsSaved(true);
