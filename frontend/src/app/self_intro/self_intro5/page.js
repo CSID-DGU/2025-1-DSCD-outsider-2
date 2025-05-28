@@ -114,7 +114,8 @@ export default function SelfIntro5() {
           본인에게 중요한 조건은<br />무엇인가요?
         </div>
         <div className="text-black text-xl mt-10">
-          10개의 항목에 중요한 순으로 등수를 매겨주세요
+          10개의 항목에 중요한 순으로 등수를 매겨주세요<br/>
+          숫자는 1~10 사이로, 중복 없이 입력해야 합니다
         </div>
         {errorMsg && (
           <div className="text-red-500 text-sm font-medium mt-4">{errorMsg}</div>
