@@ -8,74 +8,78 @@ export default function SelfIntroSavePage() {
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    const simulateSave = async () => {
-      const userData = {
-        kakao_id: localStorage.getItem("signup_kakao_id"),
-        password: localStorage.getItem("signup_password"),
-        location: localStorage.getItem("signup_location"),
-        gender: localStorage.getItem("gender"),
-        height: localStorage.getItem("height"),
-        age: localStorage.getItem("age"),
-        drink: localStorage.getItem("drink"),
-        smoke: localStorage.getItem("smoke"),
-        religion: localStorage.getItem("religion"),
-        education: localStorage.getItem("education"),
-        EorI: localStorage.getItem("mbti_EorI"),
-        SorN: localStorage.getItem("mbti_SorN"),
-        TorF: localStorage.getItem("mbti_TorF"),
-        JorP: localStorage.getItem("mbti_JorP"),
-        preferred_height: JSON.parse(localStorage.getItem("idealHeights") || "[]").join(", "),
-        preferred_age: JSON.parse(localStorage.getItem("idealAges") || "[]").join(", "),
-        preferred_alcohol: JSON.parse(localStorage.getItem("idealDrinks") || "[]").join(", "),
-        preferred_smoking: JSON.parse(localStorage.getItem("idealSmokes") || "[]").join(", "),
-        preferred_religion: JSON.parse(localStorage.getItem("idealReligions") || "[]").join(", "),
-        preferred_education: JSON.parse(localStorage.getItem("idealEducations") || "[]").join(", "),
-        preferred_energy: JSON.parse(localStorage.getItem("idealMbti") || "{}").EorI?.join(", ") || "",
-        preferred_sensing: JSON.parse(localStorage.getItem("idealMbti") || "{}").SorN?.join(", ") || "",
-        preferred_thinking: JSON.parse(localStorage.getItem("idealMbti") || "{}").TorF?.join(", ") || "",
-        preferred_judging: JSON.parse(localStorage.getItem("idealMbti") || "{}").JorP?.join(", ") || "",
-        priority_height: localStorage.getItem("priority_height"),
-        priority_age: localStorage.getItem("priority_age"),
-        priority_drink: localStorage.getItem("priority_drink"),
-        priority_smoke: localStorage.getItem("priority_smoke"),
-        priority_religion: localStorage.getItem("priority_religion"),
-        priority_education: localStorage.getItem("priority_education"),
-        priority_mbtiEI: localStorage.getItem("priority_mbtiEI"),
-        priority_mbtiSN: localStorage.getItem("priority_mbtiSN"),
-        priority_mbtiTF: localStorage.getItem("priority_mbtiTF"),
-        priority_mbtiJP: localStorage.getItem("priority_mbtiJP"),
-        personality: localStorage.getItem("personality"),
-        hobby: localStorage.getItem("hobby"),
-        weekend: localStorage.getItem("weekend"),
-        dateStyle: localStorage.getItem("dateStyle"),
-        advantage: localStorage.getItem("advantage"), // ✅ 오타 수정
-        idealpersonality: localStorage.getItem("idealpersonality"),
-        idealhobby: localStorage.getItem("idealhobby"),
-        want: localStorage.getItem("want"),
-      };
-
-      console.log("[전송] userData:", userData);
-
-      try {
-        const response = await fetch("http://localhost:8000/save_self_intro/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(userData),
-        });
-
-        const result = await response.json();
-        console.log("[응답]", result.message);
-
-        setTimeout(() => {
-          setIsSaved(true);
-        }, 500); // 잠깐 로딩 보여주기
-      } catch (error) {
-        console.error("서버 전송 실패:", error);
-      }
+  const simulateSave = async () => {
+    const userData = {
+      kakao_id: localStorage.getItem("signup_kakao_id"),
+      password: localStorage.getItem("signup_password"),
+      location: localStorage.getItem("signup_location"),
+      gender: localStorage.getItem("gender"),
+      height: localStorage.getItem("height"),
+      age: localStorage.getItem("age"),
+      drink: localStorage.getItem("drink"),
+      smoke: localStorage.getItem("smoke"),
+      religion: localStorage.getItem("religion"),
+      education: localStorage.getItem("education"),
+      EorI: localStorage.getItem("mbti_EorI"),
+      SorN: localStorage.getItem("mbti_SorN"),
+      TorF: localStorage.getItem("mbti_TorF"),
+      JorP: localStorage.getItem("mbti_JorP"),
+      preferred_height: JSON.parse(localStorage.getItem("idealHeights") || "[]").join(", "),
+      preferred_age: JSON.parse(localStorage.getItem("idealAges") || "[]").join(", "),
+      preferred_alcohol: JSON.parse(localStorage.getItem("idealDrinks") || "[]").join(", "),
+      preferred_smoking: JSON.parse(localStorage.getItem("idealSmokes") || "[]").join(", "),
+      preferred_religion: JSON.parse(localStorage.getItem("idealReligions") || "[]").join(", "),
+      preferred_education: JSON.parse(localStorage.getItem("idealEducations") || "[]").join(", "),
+      preferred_energy: JSON.parse(localStorage.getItem("idealMbti") || "{}").EorI?.join(", ") || "",
+      preferred_sensing: JSON.parse(localStorage.getItem("idealMbti") || "{}").SorN?.join(", ") || "",
+      preferred_thinking: JSON.parse(localStorage.getItem("idealMbti") || "{}").TorF?.join(", ") || "",
+      preferred_judging: JSON.parse(localStorage.getItem("idealMbti") || "{}").JorP?.join(", ") || "",
+      priority_height: localStorage.getItem("priority_height"),
+      priority_age: localStorage.getItem("priority_age"),
+      priority_drink: localStorage.getItem("priority_drink"),
+      priority_smoke: localStorage.getItem("priority_smoke"),
+      priority_religion: localStorage.getItem("priority_religion"),
+      priority_education: localStorage.getItem("priority_education"),
+      priority_mbtiEI: localStorage.getItem("priority_mbtiEI"),
+      priority_mbtiSN: localStorage.getItem("priority_mbtiSN"),
+      priority_mbtiTF: localStorage.getItem("priority_mbtiTF"),
+      priority_mbtiJP: localStorage.getItem("priority_mbtiJP"),
+      personality: localStorage.getItem("personality"),
+      hobby: localStorage.getItem("hobby"),
+      weekend: localStorage.getItem("weekend"),
+      dateStyle: localStorage.getItem("dateStyle"),
+      advantage: localStorage.getItem("advantage"),
+      idealpersonality: localStorage.getItem("idealpersonality"),
+      idealhobby: localStorage.getItem("idealhobby"),
+      want: localStorage.getItem("want"),
     };
 
-    simulateSave();
-  }, []);
+    const url =
+      userData.gender === "남자"
+        ? "http://localhost:8000/manuserdata/"            //남자 라우터
+        : "http://localhost:8000/womanuserdata/";         //여자 라우터
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      const result = await response.json();
+      console.log("[응답]", result.message);
+
+      setTimeout(() => {
+        setIsSaved(true);
+      }, 500);
+    } catch (error) {
+      console.error("서버 전송 실패:", error);
+    }
+  };
+
+  simulateSave();
+}, []);
+
 
   const handleGoToMypage = () => {
     router.push("/mypage");
