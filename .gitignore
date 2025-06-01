@@ -1,5 +1,7 @@
-"venv/" 
-"*.pyc" 
-"__pycache__/" 
-"*.log" 
-".env" 
+# .gitignore 파일 내용 예시
+venv/
+test/venv/
+*.pyc
+__pycache__/
+.env
+# 기타 무시할 파일들
