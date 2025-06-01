@@ -10,25 +10,36 @@ export default function MatchingResult() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      const dummyData = {
-        gender: "여자",
-        height: "170cm-174cm",
-        age: "30-32세",
-        drink: "월 2-3회",
-        smoke: "비흡연자",
-        religion: "무교",
-        education: "석사",
-        mbti: "ISFP",
-        personality: "긍정적이고 활발한 성격입니다. 밝고 다른 사람들을 즐겁게 해준다는 평가를 많이 받습니다. 모든 사람들과 두루두루 잘 친해지고 친화력이 좋습니당",
-        hobby: "침대에 누워서 넷플릭스 보는 것을 좋아해요. 로맨스 드라마랑 예능 프로그램을 찾아서 보는 것을 좋아합니다",
-        holiday: "카페에서 책 읽으며 시간을 보냅니다. 가끔은 운동하기도 해요",
-        datingStyle: "활동적이고 실내 스포츠를 좋아해요.",
-        strength: "배려심 많고 책임감 있는 편이에요."
-      };
-      setMatchData(dummyData);
-      setLoading(false);
-    }, 1000);
+    const fetchMatchInfo = async () => {
+      try {
+        const userId = Number(localStorage.getItem("user_id")); // 실제 로그인 정보 기준
+        const res = await fetch("https://your-backend-url/matching/results");   // 백엔드에 /matching/results를 처리하는 라우트 코드 추가하기   //프론트에서 전체 매칭 결과를 가져오기 위한 API 호출
+        const allMatches = await res.json();
+
+        const myMatch = allMatches.find(
+          (match) => match.man_identifier === userId || match.woman_identifier === userId   //내가 속한 매칭 찾기
+        );
+        if (!myMatch) return;
+
+        const opponentId =
+          myMatch.man_identifier === userId               //상대방 id추출
+            ? myMatch.woman_identifier
+            : myMatch.man_identifier;
+
+        const opponentRes = await fetch(
+          `https://your-backend-url/matching/userdata/${opponentId}`    // 상대방의 자기소개 데이터를 가져오는 API
+
+
+        );
+        const opponentData = await opponentRes.json();
+        setMatchData(opponentData);
+        setLoading(false);
+      } catch (error) {
+        console.error("매칭 정보 불러오기 실패:", error);
+      }
+    };
+
+    fetchMatchInfo();
   }, []);
 
   if (loading || !matchData) {
@@ -61,12 +72,12 @@ export default function MatchingResult() {
               {[
                 { label: "성별", value: matchData.gender },
                 { label: "키", value: matchData.height },
-                { label: "나이", value: matchData.age },
-                { label: "음주 빈도", value: matchData.drink },
-                { label: "흡연 여부", value: matchData.smoke },
+                { label: "나이", value: matchData.age_group },
+                { label: "음주 빈도", value: matchData.alcohol },
+                { label: "흡연 여부", value: matchData.smoking },
                 { label: "종교", value: matchData.religion },
                 { label: "학력", value: matchData.education },
-                { label: "MBTI", value: matchData.mbti }
+                { label: "MBTI", value: `${matchData.mbti_energy}${matchData.mbti_sensing}${matchData.mbti_thinking}${matchData.mbti_judging}` },
               ].map((item) => (
                 <div key={item.label}>
                   <div className="text-sm font-medium mb-1">{item.label}</div>
@@ -81,11 +92,11 @@ export default function MatchingResult() {
           {/* 오른쪽 박스 */}
           <div className="bg-rose-50 rounded-[50px] w-[600px] h-[850px] p-10 flex flex-col gap-6 overflow-y-auto scrollbar-thin scrollbar-thumb-rose-200 scrollbar-track-transparent">
             {[
-              { title: "성격", content: matchData.personality, img: "성격.png" },
+              { title: "성격", content: matchData.my_character, img: "성격.png" },
               { title: "취미", content: matchData.hobby, img: "취미.png" },
               { title: "휴일 루틴", content: matchData.holiday, img: "휴일루틴.png" },
-              { title: "데이트 스타일", content: matchData.datingStyle, img: "데이트스타일.png" },
-              { title: "장점", content: matchData.strength, img: "장점.png" }
+              { title: "데이트 스타일", content: matchData.dating_style, img: "데이트스타일.png" },
+              { title: "장점", content: matchData.strength_in_relationship, img: "장점.png" },
             ].map((item) => (
               <div
                 key={item.title}
@@ -112,14 +123,14 @@ export default function MatchingResult() {
         {/* 버튼 영역 */}
         <div className="flex justify-center gap-6 mt-8">
           <button
-          onClick={() => router.push("/match_reject")}
-          className="w-60 p-3 rounded-lg border border-black/50"
+            onClick={() => router.push("/match_reject")}
+            className="w-60 p-3 rounded-lg border border-black/50"
           >
             거절하기
           </button>
           <button 
-          onClick={() => router.push("/match_accept")}
-          className="w-60 p-3 bg-red-200 rounded-lg text-white font-bold"
+            onClick={() => router.push("/match_accept")}
+            className="w-60 p-3 bg-red-200 rounded-lg text-white font-bold"
           >
             수락하기
           </button>
