@@ -10,14 +10,34 @@ export default function MatchPartnerInfoPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 임시 데이터 (백엔드 연동 예정)
-    setTimeout(() => {
-      const dummyData = {
-        kakaoId: "xhddurdl"
-      };
-      setPartnerInfo(dummyData);
-      setLoading(false);
-    }, 1000);
+    const fetchPartnerInfo = async () => {
+      try {
+        // 현재 로그인한 사용자의 ID를 localStorage에서 가져옴
+        const myId = localStorage.getItem("user_id");
+        if (!myId) throw new Error("사용자 ID가 없습니다.");
+
+        // 매칭 테이블에서 상대방 ID를 가져옴
+        const matchRes = await fetch(
+          `https://your-backend-url/matching/matched-partner/${myId}`     //현재 로그인한 사용자 본인의 ID
+        );
+        const matchData = await matchRes.json();
+        const opponentId = matchData.opponent_id;
+
+        // 상대방 정보 불러오기
+        const userRes = await fetch(
+          `https://your-backend-url/matching/userdata/${opponentId}`
+        );
+        const userData = await userRes.json();
+
+        setPartnerInfo(userData);
+        setLoading(false);
+      } catch (error) {
+        console.error("상대방 정보를 불러오는 중 오류 발생:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchPartnerInfo();
   }, []);
 
   return (
@@ -46,15 +66,16 @@ export default function MatchPartnerInfoPage() {
         {/* 상대방 정보 */}
         {loading ? (
           <div className="text-lg text-black/60 mt-4">상대 정보를 불러오는 중입니다...</div>
-        ) : (
+        ) : partnerInfo ? (
           <div className="w-72 text-center text-black text-xl font-bold leading-loose border border-gray-300 rounded-xl p-4">
-            카카오톡 ID: {partnerInfo.kakaoId}
+            카카오톡 ID: {partnerInfo.kakao_id}
           </div>
+        ) : (
+          <div className="text-red-500 text-lg">상대방 정보를 불러올 수 없습니다.</div>
         )}
 
         {/* 하단 버튼들 */}
         <div className="inline-flex justify-start items-start gap-3 overflow-hidden mt-8">
-          {/* 마이페이지로 가기 */}
           <button
             onClick={() => router.push("/mypage")}
             className="w-60 p-3 rounded-lg border border-black/50"
@@ -64,9 +85,8 @@ export default function MatchPartnerInfoPage() {
             </div>
           </button>
 
-          {/* 장소 추천 바로가기 */}
           <button
-            onClick={() => router.push("/place_recommend")} // 실제 추천 페이지 경로
+            onClick={() => router.push("/place_recommend")}
             className="w-60 p-3 bg-red-200 rounded-lg text-white font-bold"
           >
             <div className="text-white text-xl font-extrabold leading-normal font-['Roboto']">
@@ -76,7 +96,6 @@ export default function MatchPartnerInfoPage() {
         </div>
       </div>
 
-      {/* 하단 라인 */}
       <div className="w-full h-px mt-24 bg-black/10" />
     </div>
   );
