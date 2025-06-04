@@ -18,14 +18,14 @@ export default function MatchPartnerInfoPage() {
 
         // 매칭 테이블에서 상대방 ID를 가져옴
         const matchRes = await fetch(
-          `https://your-backend-url/matching/matched-partner/${myId}`     //현재 로그인한 사용자 본인의 ID
+          `https://web-production-550e5.up.railway.app/matching/matched-partner/${myId}`     //현재 로그인한 사용자 본인의 ID
         );
         const matchData = await matchRes.json();
         const opponentId = matchData.opponent_id;
 
         // 상대방 정보 불러오기
         const userRes = await fetch(
-          `https://your-backend-url/matching/userdata/${opponentId}`
+          `https://web-production-550e5.up.railway.app/matching/userdata/${opponentId}`
         );
         const userData = await userRes.json();
 
