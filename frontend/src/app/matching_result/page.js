@@ -53,7 +53,7 @@ export default function MatchingResult() {
       woman_accept: gender === "woman" ? accepted : false,     // 내가 여자면 수락 여부를 woman_accept에 반영
     };
 
-    await fetch("https://your-backend-url/matching/acceptance", {
+    await fetch("https://web-production-550e5.up.railway.app/matching/acceptance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
