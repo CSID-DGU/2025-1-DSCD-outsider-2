@@ -17,7 +17,7 @@ export default function SelfIntro8() {
         setIdealpersonality(savedIdealpersonality);
       }, []);
 
-  const isComplete = advantage.trim() && personality_other.trim();
+  const isComplete = advantage.trim() && idealpersonality.trim();
 
   const handleNext = () => {
     localStorage.setItem("advantage", advantage);
