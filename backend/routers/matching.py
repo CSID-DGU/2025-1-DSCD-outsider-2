@@ -436,3 +436,33 @@ def process_acceptance(db: Session):
     except Exception as e:
         db.rollback()
         print(f"match_success 처리 중 오류 발생: {str(e)}")
+        
+        
+@router.get("/matched-partner/{user_id}")
+async def get_matched_partner(user_id: int, db: Session = Depends(get_db)):
+    result = db.query(MatchSuccess).filter(
+        ((MatchSuccess.man_id == user_id) | (MatchSuccess.woman_id == user_id)),
+        MatchSuccess.match_success == True
+    ).first()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="매칭된 상대가 없습니다.")
+
+    opponent_id = result.woman_id if result.man_id == user_id else result.man_id
+    return {"opponent_id": opponent_id}
+
+@router.get("/userdata/{user_id}")
+async def get_user_data(user_id: int, db: Session = Depends(get_db)):
+    query = text("SELECT * FROM manuserdata WHERE id = :id")
+    man_result = db.execute(query, {"id": user_id}).fetchone()
+
+    if man_result:
+        return dict(man_result)
+
+    query = text("SELECT * FROM womanuserdata WHERE id = :id")
+    woman_result = db.execute(query, {"id": user_id}).fetchone()
+
+    if woman_result:
+        return dict(woman_result)
+
+    raise HTTPException(status_code=404, detail="해당 유저가 없습니다.")
