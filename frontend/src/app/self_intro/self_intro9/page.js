@@ -13,7 +13,7 @@ export default function SelfIntro9() {
         useEffect(() => {
           const savedIdealhobby = localStorage.getItem("idealhobby") || "";
           const savedWant = localStorage.getItem("want") || "";
-          setHobby_other(savedIdealhobby);
+          setIdealhobby(savedIdealhobby);
           setWant(savedWant);
         }, []);
   
