@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function MatchingResult() {
+export default function MatchingResult_YJ() {
   const router = useRouter();
   const [matchData, setMatchData] = useState(null);
   const [loading, setLoading] = useState(true);
