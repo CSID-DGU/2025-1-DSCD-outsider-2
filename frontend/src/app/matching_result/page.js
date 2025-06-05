@@ -13,18 +13,18 @@ export default function MatchingResult() {
     setTimeout(() => {
       const dummyData = {
         gender: "여자",
-        height: "170cm-174cm",
-        age: "30-32세",
-        drink: "월 2-3회",
+        height: "150cm-154cm",
+        age: "23-26세",
+        drink: "주 1-2회",
         smoke: "비흡연자",
         religion: "무교",
-        education: "석사",
-        mbti: "ISFP",
-        personality: "긍정적이고 활발한 성격입니다. 밝고 다른 사람들을 즐겁게 해준다는 평가를 많이 받습니다. 모든 사람들과 두루두루 잘 친해지고 친화력이 좋습니당",
-        hobby: "침대에 누워서 넷플릭스 보는 것을 좋아해요. 로맨스 드라마랑 예능 프로그램을 찾아서 보는 것을 좋아합니다",
-        holiday: "카페에서 책 읽으며 시간을 보냅니다. 가끔은 운동하기도 해요",
-        datingStyle: "활동적이고 실내 스포츠를 좋아해요.",
-        strength: "배려심 많고 책임감 있는 편이에요."
+        education: "4년제 대학교 재학 및 졸업",
+        mbti: "ISTP",
+        personality: "소심해 보일 수 있지만 정이 많고 감정이 풍부한 편이에요 배려하려고 노력하는 스타일이에요",
+        hobby: "시간 날 때마다 전시회 보러 다녀요 친구랑 수다 떠는 시간이 제일 즐거워요 취미를 통해 저 자신을 더 알아가는 중이에요",
+        holiday: "카페에 가서 커피 마시며 책을 읽어요 부모님 댁 들렀다 오는 일도 많아요 유튜브 보면서 하루 종일 뒹굴기도 해요",
+        datingStyle: "드라이브하면서 음악 듣는 게 좋더라고요 영화 보고 나서 분위기 좋은 데서 밥 먹는 걸 좋아해요 계획 짜는 건 제가 다 하는 편이에요",
+        strength: "작은 것도 잘 기억하려고 해요 감정 표현을 자주 하는 편이에요 함께 있는 시간은 최대한 즐겁게 만들고 싶어요"
       };
       setMatchData(dummyData);
       setLoading(false);
