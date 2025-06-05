@@ -436,3 +436,45 @@ def process_acceptance(db: Session):
     except Exception as e:
         db.rollback()
         print(f"match_success 처리 중 오류 발생: {str(e)}")
+
+        # routers/matching.py 하단에 추가
+
+
+@router.get("/userdata/{user_id}")
+async def get_opponent_userdata(user_id: int, db: Session = Depends(get_db)):
+    # 남자 테이블에서 먼저 찾기
+    man = db.query(ManModel).filter(ManModel.id == user_id).first()
+    if man:
+        return ManSchema.from_orm(man)
+    
+    # 없으면 여자 테이블에서 찾기
+    woman = db.query(WomanModel).filter(WomanModel.id == user_id).first()
+    if woman:
+        return WomanSchema.from_orm(woman)
+
+    raise HTTPException(status_code=404, detail="User not found")
+    
+    
+@router.get("/results", response_model=List[MatchingResult])
+async def get_matching_results(db: Session = Depends(get_db)):
+    try:
+        matches = db.query(MatchingResult).all()
+        return matches
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"데이터 조회 오류: {str(e)}")
+        
+ 
+ 
+@router.get("/matched-partner/{user_id}")
+async def get_matched_partner(user_id: int, db: Session = Depends(get_db)):
+    # 매칭 테이블에서 상대방 ID 추출
+    result = db.query(MatchingResult).filter(
+        (MatchingResult.man_identifier == user_id) | (MatchingResult.woman_identifier == user_id)
+    ).first()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="No matched partner found")
+
+    partner_id = result.woman_identifier if result.man_identifier == user_id else result.man_identifier
+    return {"partner_id": partner_id}
+        
