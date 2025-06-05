@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 
 export default function Mypage() {
   const router = useRouter();
-  const [nickname, setNickname] = useState("");
+  const [signup_kakao_id, setSignup_kakao_id] = useState("");
 
   // 페이지 진입 시 localStorage에서 사용자 정보 확인
   useEffect(() => {
-    const storedNickname = localStorage.getItem("nickname");
-    if (storedNickname) {
-      setNickname(storedNickname);
+    const storedSignup_kakao_id = localStorage.getItem("signup_kakao_id");
+    if (storedSignup_kakao_id) {
+      setSignup_kakao_id(storedSignup_kakao_id);
     } else {
       alert("로그인이 필요합니다!");
       router.push("/login");
@@ -35,7 +35,7 @@ export default function Mypage() {
       <div className="w-[858px] text-center mx-auto gap-4 mt-16">
         <div className="text-4xl font-bold">마이페이지</div>
         <div className="text-3xl text-center font-medium">
-          {nickname}님 반가워요!<br />
+          {signup_kakao_id}님 반가워요!<br />
           지금 바로 시작해보세요
         </div>
       </div>
@@ -45,54 +45,16 @@ export default function Mypage() {
         <div className="grid grid-cols-2 gap-16">
 
           {/* 오늘의 매칭 결과 */}
-          <button onClick={() => router.push("/matching_result")}>
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
-                <img src="/매칭결과보기.png" alt="매칭 결과" />
-              </div>
-              <div className="text-xl">오늘의 매칭 결과</div>
-              <div className="text-base text-black/50 text-center">매칭된 상대의 프로필을 확인해보세요!</div>
-            </div>
-          </button>
+          <button onClick={() => router.push("/matching_result")}>...</button>
 
           {/* 소개팅 신청하기 */}
-          <button onClick={() => alert("소개팅 신청 이동")}>
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
-                <img src="/소개팅신청하기.png" alt="소개팅 신청" />
-              </div>
-              <div className="text-xl">소개팅 신청하기</div>
-              <div className="text-base text-black/50 text-center">
-                소개팅을 신청해서 <br /> 새로운 인연을 만나보세요!
-              </div>
-            </div>
-          </button>
+          <button onClick={() => alert("소개팅 신청 이동")}>...</button>
 
           {/* 자기소개서 작성 */}
-          <button onClick={() => router.push("/self_intro/self_intro1")}>
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
-                <img src="/자기소개서작성.png" alt="자기소개서" />
-              </div>
-              <div className="text-xl">자기소개서 작성</div>
-              <div className="text-base text-black/50 text-center">
-                작성/수정하고 <br /> 새로운 인연을 만나보세요!
-              </div>
-            </div>
-          </button>
+          <button onClick={() => router.push("/self_intro/self_intro1")}>...</button>
 
           {/* 수락한 상대 확인 */}
-          <button onClick={() => router.push("/partner_info")}>
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-24 h-24 bg-black/5 rounded-full flex justify-center items-center">
-                <img src="/내정보수정.png" alt="수락한 상대 확인" />
-              </div>
-              <div className="text-xl">수락한 상대 확인</div>
-              <div className="text-base text-black/50 text-center">
-                서로 수락한 경우,<br />다음 날 오전 8시에 카카오톡 ID가 공개돼요
-              </div>
-            </div>
-          </button>
+          <button onClick={() => router.push("/partner_info")}>...</button>
 
         </div>
       </div>
