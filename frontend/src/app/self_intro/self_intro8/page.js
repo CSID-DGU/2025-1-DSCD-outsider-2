@@ -14,10 +14,10 @@ export default function SelfIntro8() {
         const savedAdvantage = localStorage.getItem("advantage") || "";
         const savedIdealpersonality = localStorage.getItem("idealpersonality") || "";
         setAdvantage(savedAdvantage);
-        setPersonality_other(savedIdealpersonality);
+        setIdealpersonality(savedIdealpersonality);
       }, []);
 
-  const isComplete = advantage.trim() && personality_other.trim();
+  const isComplete = advantage.trim() && idealpersonality.trim();
 
   const handleNext = () => {
     localStorage.setItem("advantage", advantage);

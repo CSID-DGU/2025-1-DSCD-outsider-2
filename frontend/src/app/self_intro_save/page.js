@@ -56,8 +56,8 @@ export default function SelfIntroSavePage() {
 
     const url =
       userData.gender === "남자"
-        ? "http://localhost:8000/manuserdata/"            //남자 라우터
-        : "http://localhost:8000/womanuserdata/";         //여자 라우터
+        ? "https://web-production-550e5.up.railway.app/manuserdata/"            //남자 라우터
+        : "https://web-production-550e5.up.railway.app/womanuserdata/";         //여자 라우터
 
     try {
       const response = await fetch(url, {

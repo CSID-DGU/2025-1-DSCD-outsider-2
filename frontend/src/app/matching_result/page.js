@@ -15,7 +15,7 @@ export default function MatchingResult() {
       try {
         const userId = Number(localStorage.getItem("user_id"));              // 실제 로그인 정보 기준
         const userGender = localStorage.getItem("gender");
-        const res = await fetch("https://your-backend-url/matching/results");    // 백엔드에 /matching/results를 처리하는 라우트 코드 추가하기   //프론트에서 전체 매칭 결과를 가져오기 위한 API 호출
+        const res = await fetch("https://web-production-550e5.up.railway.app/matching/results");    // 백엔드에 /matching/results를 처리하는 라우트 코드 추가하기   //프론트에서 전체 매칭 결과를 가져오기 위한 API 호출
         const allMatches = await res.json();
 
         const myMatch = allMatches.find(
@@ -30,7 +30,7 @@ export default function MatchingResult() {
         setOpponentId(opponent);
 
         const opponentRes = await fetch(
-          `https://your-backend-url/matching/userdata/${opponent}`    // 상대방의 자기소개 데이터를 가져오는 API
+          `https://web-production-550e5.up.railway.app/matching/userdata/${opponent}`    // 상대방의 자기소개 데이터를 가져오는 API
         );
         const opponentData = await opponentRes.json();
         setMatchData(opponentData);
@@ -53,7 +53,7 @@ export default function MatchingResult() {
       woman_accept: gender === "woman" ? accepted : false,     // 내가 여자면 수락 여부를 woman_accept에 반영
     };
 
-    await fetch("https://your-backend-url/matching/acceptance", {
+    await fetch("https://web-production-550e5.up.railway.app/matching/acceptance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
