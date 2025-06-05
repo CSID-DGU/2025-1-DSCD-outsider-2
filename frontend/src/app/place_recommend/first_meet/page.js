@@ -10,9 +10,9 @@ export default function FirstMeetPlaceRecommendPage() {
 
   // 이미지 매핑 정보 (장소명 → 이미지 파일명)
   const imageMap = {
-    "유어다이닝 (양식)": "맛집.png",
-    "이퀄커피": "카페.png",
-    "망원 한강 공원": "놀거리.png",
+    "강남면옥 성수점 (한식)": "맛집.png",
+    "ElPatio": "카페.png",
+    "도화공간 (도자기 클래스)": "놀거리.png",
   };
 
   useEffect(() => {
