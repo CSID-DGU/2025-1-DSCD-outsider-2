@@ -479,7 +479,6 @@ async def get_matched_partner(user_id: int, db: Session = Depends(get_db)):
     partner_id = result.woman_identifier if result.man_identifier == user_id else result.man_identifier
     return {"partner_id": partner_id}
         
-=======
         
         
 @router.get("/matched-partner/{user_id}")
