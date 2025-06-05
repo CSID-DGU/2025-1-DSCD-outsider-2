@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 
 export default function Mypage() {
   const router = useRouter();
-  const [nickname, setNickname] = useState("");
+  const [signup_kakao_id, setSignup_kakao_id] = useState("");
 
   // 페이지 진입 시 localStorage에서 사용자 정보 확인
   useEffect(() => {
-    const storedNickname = localStorage.getItem("nickname");
-    if (storedNickname) {
-      setNickname(storedNickname);
+    const storedSignup_kakao_id = localStorage.getItem("signup_kakao_id");
+    if (storedSignup_kakao_id) {
+      setSignup_kakao_id(storedSignup_kakao_id);
     } else {
       alert("로그인이 필요합니다!");
       router.push("/login");
@@ -35,7 +35,7 @@ export default function Mypage() {
       <div className="w-[858px] text-center mx-auto gap-4 mt-16">
         <div className="text-4xl font-bold">마이페이지</div>
         <div className="text-3xl text-center font-medium">
-          {nickname}님 반가워요!<br />
+          {signup_kakao_id}님 반가워요!<br />
           지금 바로 시작해보세요
         </div>
       </div>
