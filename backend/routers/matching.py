@@ -510,4 +510,3 @@ async def get_user_data(user_id: int, db: Session = Depends(get_db)):
         return dict(woman_result)
 
     raise HTTPException(status_code=404, detail="해당 유저가 없습니다.")
->>>>>>> 21575648a7a4a8a4fd70829a0e3aea947413234a
