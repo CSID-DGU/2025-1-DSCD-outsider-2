@@ -436,7 +436,7 @@ def process_acceptance(db: Session):
     except Exception as e:
         db.rollback()
         print(f"match_success 처리 중 오류 발생: {str(e)}")
-<<<<<<< HEAD
+
 
         # routers/matching.py 하단에 추가
 
