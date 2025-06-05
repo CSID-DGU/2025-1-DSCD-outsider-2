@@ -13,9 +13,23 @@ export default function MatchingResult() {
   useEffect(() => {
     const fetchMatchInfo = async () => {
       try {
-        const userId = Number(localStorage.getItem("user_id"));              // 실제 로그인 정보 기준
+        let userId = Number(localStorage.getItem("user_id"));
         const userGender = localStorage.getItem("gender");
-        const res = await fetch("https://web-production-550e5.up.railway.app/matching/results");    // 백엔드에 /matching/results를 처리하는 라우트 코드 추가하기   //프론트에서 전체 매칭 결과를 가져오기 위한 API 호출
+
+        // user_id가 없다면 임시로 kakao_id로 조회해서 받아오기
+        if (!userId || userId === 0) {
+          const kakaoId = localStorage.getItem("signup_kakao_id");
+          const gender = localStorage.getItem("gender");
+
+          const url = `https://web-production-550e5.up.railway.app/${gender}userdata/by-kakao/${kakaoId}`;
+          const response = await fetch(url);
+          const userData = await response.json();
+          userId = userData.id;
+
+          localStorage.setItem("user_id", String(userId)); // 저장
+        }
+
+        const res = await fetch("https://web-production-550e5.up.railway.app/matching/results");
         const allMatches = await res.json();
 
         const myMatch = allMatches.find(
@@ -24,13 +38,13 @@ export default function MatchingResult() {
         if (!myMatch) return;
 
         const opponent =
-          myMatch.man_identifier === userId              //내가 속한 매칭 찾기
+          myMatch.man_identifier === userId
             ? myMatch.woman_identifier
             : myMatch.man_identifier;
         setOpponentId(opponent);
 
         const opponentRes = await fetch(
-          `https://web-production-550e5.up.railway.app/matching/userdata/${opponent}`    // 상대방의 자기소개 데이터를 가져오는 API
+          `https://web-production-550e5.up.railway.app/matching/userdata/${opponent}`
         );
         const opponentData = await opponentRes.json();
         setMatchData(opponentData);
@@ -44,13 +58,19 @@ export default function MatchingResult() {
   }, []);
 
   const handleResponse = async (accepted) => {
-    const userId = Number(localStorage.getItem("user_id"));
+    const userIdStr = localStorage.getItem("user_id");
+    if (!userIdStr) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+    const userId = Number(userIdStr);
     const gender = localStorage.getItem("gender");
+
     const body = {
-      man_id: gender === "man" ? userId : opponentId,   // 내가 남자면 userId를 man_id로, 상대방은 woman_id로
-      woman_id: gender === "woman" ? userId : opponentId,   // 내가 여자면 userId를 woman_id로, 상대방은 man_id로
-      man_accept: gender === "man" ? accepted : false,         // 내가 남자면 수락 여부를 man_accept에 반영
-      woman_accept: gender === "woman" ? accepted : false,     // 내가 여자면 수락 여부를 woman_accept에 반영
+      man_id: gender === "man" ? userId : opponentId,
+      woman_id: gender === "woman" ? userId : opponentId,
+      man_accept: gender === "man" ? accepted : false,
+      woman_accept: gender === "woman" ? accepted : false,
     };
 
     await fetch("https://web-production-550e5.up.railway.app/matching/acceptance", {
