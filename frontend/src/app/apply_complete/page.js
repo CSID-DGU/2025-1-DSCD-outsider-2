@@ -18,20 +18,24 @@ export default function ApplyCompletePage() {
         </div>
       </div>
 
-
       {/* ----- 본문 영역 ----- */}
       <div className="flex flex-col items-center justify-center w-full mt-40 gap-12 text-center px-4">
-        {/* 텍스트 + 아이콘 */}
+        {/* 텍스트 */}
         <div className="text-black-400 text-4xl font-bold">
           소개팅 신청이 완료되었습니다!
         </div>
-        <div className="flex items-center gap-6">
+
+        {/* 이미지 클릭 시 이동 */}
+        <button
+          onClick={() => router.push("/matching_result_YJ")}
+          className="flex items-center justify-center"
+        >
           <img
             className="w-24 h-24"
             src="소개팅신청완료.png"
             alt="아이콘"
           />
-        </div>
+        </button>
 
         {/* 매칭 안내 박스 */}
         <div className="bg-rose-50 w-[878px] h-40 rounded-[30px] flex items-center justify-center px-10 text-center">
