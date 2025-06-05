@@ -30,7 +30,9 @@ export default function MatchingResult() {
         }
 
         const res = await fetch("https://web-production-550e5.up.railway.app/matching/results");
+
         const allMatches = await res.json();
+        console.log("백엔드 응답:", allMatches); //  프론트: API 응답 로깅 추가
 
         const myMatch = allMatches.find(
           (match) => match.man_identifier === userId || match.woman_identifier === userId
