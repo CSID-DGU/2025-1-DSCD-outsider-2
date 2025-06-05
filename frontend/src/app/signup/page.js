@@ -83,7 +83,7 @@ export default function Signup() {
             className="w-64 p-2 border border-gray-400 rounded"
           />
           <p className="text-xs text-gray-500 mt-1">
-          비밀번호는 카카오톡 비밀번호가 아닌 걸로 설정해주세요.
+            비밀번호는 카카오톡 비밀번호가 아닌 걸로 설정해주세요.
           </p>
         </div>
 
