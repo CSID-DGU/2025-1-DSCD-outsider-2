@@ -4,9 +4,15 @@ from dependencies import get_db, engine
 from sqlalchemy.ext.declarative import declarative_base
 from routers import matching, manuserdata, womanuserdata  # ✅ 라우터 전부 import
 from routers import womanuserdata, manuserdata, data_import
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routers import womanuserdata, manuserdata, data_import
 
 Base = declarative_base()
 app = FastAPI()
+
+
+
 
 # CORS 설정
 app.add_middleware(
