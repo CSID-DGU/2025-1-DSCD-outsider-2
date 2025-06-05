@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dependencies import get_db, engine
 from sqlalchemy.ext.declarative import declarative_base
 from routers import matching, manuserdata, womanuserdata  # ✅ 라우터 전부 import
+from routers import womanuserdata, manuserdata, data_import
 
 Base = declarative_base()
 app = FastAPI()
@@ -23,6 +24,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(matching.router)
 app.include_router(manuserdata.router)
 app.include_router(womanuserdata.router)
+app.include_router(data_import.router)
 
 @app.get("/")
 async def root():
