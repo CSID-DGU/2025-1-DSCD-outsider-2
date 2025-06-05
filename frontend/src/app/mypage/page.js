@@ -35,7 +35,7 @@ export default function Mypage() {
       <div className="w-[858px] text-center mx-auto gap-4 mt-16">
         <div className="text-4xl font-bold">마이페이지</div>
         <div className="text-3xl text-center font-medium">
-          {nickname}님 반가워요!<br />
+          {signup_kakao_id}님 반가워요!<br />
           지금 바로 시작해보세요
         </div>
       </div>
