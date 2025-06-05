@@ -38,3 +38,10 @@ def create_manuserdata(user_data: ManuserdataSchema, db: Session = Depends(get_d
         return user
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saving man user data: {str(e)}")
+
+@router.get("/by-kakao/{kakao_id}")
+def get_user_by_kakao_id(kakao_id: str, db: Session = Depends(get_db)):
+    user = db.query(ManUser).filter(ManUser.kakao_id == kakao_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user

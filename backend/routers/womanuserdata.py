@@ -40,3 +40,10 @@ def create_womanuserdata(user_data: WomanuserdataSchema, db: Session = Depends(g
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error saving woman user data: {str(e)}")
 
+
+@router.get("/by-kakao/{kakao_id}")
+def get_user_by_kakao_id(kakao_id: str, db: Session = Depends(get_db)):
+    user = db.query(WomanUser).filter(WomanUser.kakao_id == kakao_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
