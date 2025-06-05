@@ -5,6 +5,8 @@ class Womanuserdata(Base):
     __tablename__ = "womanuserdata"
 
     id = Column(Integer, primary_key=True)
+    kakao_id = Column(String(50))
+    password = Column(String(100))
     gender = Column(String(10))
     height = Column(String(50))
     age_group = Column(String(50))

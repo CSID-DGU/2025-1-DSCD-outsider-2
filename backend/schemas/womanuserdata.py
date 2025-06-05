@@ -2,6 +2,8 @@ from pydantic import BaseModel
 
 class Womanuserdata(BaseModel):
     id: int
+    kakao_id: str
+    password: str
     gender: str | None
     height: str | None
     age_group: str | None

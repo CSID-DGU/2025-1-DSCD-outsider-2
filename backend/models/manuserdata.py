@@ -5,6 +5,8 @@ class Manuserdata(Base):
     __tablename__ = "manuserdata"
 
     id = Column(Integer, primary_key=True)
+    kakao_id = Column(String(50))
+    password = Column(String(100))
     gender = Column(String(10))
     height = Column(String(50))
     age_group = Column(String(50))
