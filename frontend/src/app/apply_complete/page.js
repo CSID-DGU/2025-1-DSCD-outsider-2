@@ -9,12 +9,22 @@ export default function ApplyCompletePage() {
     <div className="w-full min-h-screen bg-white relative overflow-hidden">
       {/* ----- 상단바 ----- */}
       <div className="w-full px-14 py-5 flex justify-between items-center border-b border-gray-300">
-        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">슈끌림</button>
+        <button onClick={() => router.push("/")} className="text-black text-3xl font-bold cursor-pointer">
+          슈끌림
+        </button>
         <div className="flex gap-12">
-          <button onClick={() => router.push("/site_intro")} className="text-black text-base">사이트 소개</button>
-          <button onClick={() => router.push("/how_to_use")} className="text-black text-base">이용 방법</button>
-          <button onClick={() => router.push("/mypage")} className="text-black text-base">마이페이지</button>
-          <button onClick={() => router.push("/place_recommend")} className="text-black text-base">장소 추천</button>
+          <button onClick={() => router.push("/site_intro")} className="text-black text-base">
+            사이트 소개
+          </button>
+          <button onClick={() => router.push("/how_to_use")} className="text-black text-base">
+            이용 방법
+          </button>
+          <button onClick={() => router.push("/mypage")} className="text-black text-base">
+            마이페이지
+          </button>
+          <button onClick={() => router.push("/place_recommend")} className="text-black text-base">
+            장소 추천
+          </button>
         </div>
       </div>
 
@@ -26,16 +36,12 @@ export default function ApplyCompletePage() {
         </div>
 
         {/* 이미지 클릭 시 이동 */}
-        <button
+        <img
           onClick={() => router.push("/matching_result_YJ")}
-          className="flex items-center justify-center"
-        >
-          <img
-            className="w-24 h-24"
-            src="소개팅신청완료.png"
-            alt="아이콘"
-          />
-        </button>
+          className="w-24 h-24 cursor-pointer"
+          src="/소개팅신청완료.png" // public 폴더에 있어야 함
+          alt="아이콘"
+        />
 
         {/* 매칭 안내 박스 */}
         <div className="bg-rose-50 w-[878px] h-40 rounded-[30px] flex items-center justify-center px-10 text-center">
