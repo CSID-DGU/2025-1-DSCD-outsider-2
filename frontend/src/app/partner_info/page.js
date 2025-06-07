@@ -13,7 +13,7 @@ export default function MatchPartnerInfoPage() {
     // 임시 데이터 (백엔드 연동 예정)
     setTimeout(() => {
       const dummyData = {
-        kakaoId: "min._.vely"
+        kakaoId: "strong_jeonghyuk_183"
       };
       setPartnerInfo(dummyData);
       setLoading(false);
