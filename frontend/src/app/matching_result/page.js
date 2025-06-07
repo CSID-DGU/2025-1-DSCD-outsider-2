@@ -12,7 +12,7 @@ export default function MatchingResult() {
   useEffect(() => {
     setTimeout(() => {
       const dummyData = {
-        gender: "여자",
+        gender: "여성",
         height: "150cm-154cm",
         age: "23-26세",
         drink: "주 1-2회",
