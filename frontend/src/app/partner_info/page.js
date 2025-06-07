@@ -13,7 +13,7 @@ export default function MatchPartnerInfoPage() {
     // 임시 데이터 (백엔드 연동 예정)
     setTimeout(() => {
       const dummyData = {
-        kakaoId: "xhddurdl"
+        kakaoId: "min._.vely"
       };
       setPartnerInfo(dummyData);
       setLoading(false);
